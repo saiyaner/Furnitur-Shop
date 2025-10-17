@@ -15,16 +15,16 @@
 
 ## 🛍️ About Project
 
-**Furnitur Shop** is an online furniture store built using the **Laravel framework**.  
-This project was created to make it easier for users to browse, order, and manage furniture products online.
+**Furnitur Shop** adalah platform e-commerce modern untuk penjualan furnitur berbasis **Laravel**.  
+Proyek ini dibuat untuk memudahkan pengguna dalam menelusuri, memesan, dan mengelola produk furnitur secara online.
 
-### ✨ Features
-- 🏠 Homepage with product showcase  
-- 🔍 Product search and filter  
-- 🛒 Shopping cart system  
-- 💳 Checkout and order management  
-- 👤 User authentication (Laravel Breeze)  
-- 🧾 Admin dashboard for managing products and users  
+### ✨ Fitur Utama
+- 🏠 Halaman utama dengan tampilan produk  
+- 🔍 Pencarian dan filter produk  
+- 🛒 Sistem keranjang belanja  
+- 💳 Checkout & manajemen pesanan  
+- 👤 Autentikasi pengguna (Laravel Breeze)  
+- 🧾 Dashboard admin untuk mengelola produk dan pengguna  
 
 ---
 
@@ -39,12 +39,29 @@ This project was created to make it easier for users to browse, order, and manag
 
 ## 🚀 Installation
 
+Langkah-langkah untuk menjalankan proyek di lokal:
+
 ```bash
+# Clone repository
 git clone https://github.com/saiyaner/Furnitur-Shop.git
+
+# Masuk ke folder project
 cd Furnitur-Shop
+
+# Install dependencies
 composer install
+
+# Copy environment
 cp .env.example .env
+
+# Generate app key
 php artisan key:generate
+
+# Migrasi & seeding database
 php artisan migrate --seed
+
+# Install frontend dependencies
 npm install && npm run dev
+
+# Jalankan server lokal
 php artisan serve
