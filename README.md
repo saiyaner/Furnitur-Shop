@@ -29,7 +29,7 @@ Proyek ini dibuat untuk memudahkan pengguna dalam menelusuri, memesan, dan menge
 ---
 
 ## ⚙️ Tech Stack
-- **Framework:** Laravel 11  
+- **Framework:** Laravel 12  
 - **Frontend:** Blade, TailwindCSS  
 - **Auth System:** Laravel Breeze  
 - **Database:** MySQL  
