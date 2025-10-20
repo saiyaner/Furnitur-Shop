@@ -6,7 +6,7 @@
     <title>Furniture Shop</title>
     @vite('resources/css/app.css')
   </head>
-  <body>
+  <body class="font-primary">
 
   <header class="header relative">
     <img src="{{ asset('img/bg-hero-home.png') }}" class="w-full object-cover object-center h-screen absolute inset-0 -z-10">
@@ -34,7 +34,7 @@
       </nav>
       
       <section id="Hero" class="text-white flex flex-col justify-center items-center mx-5 md:mx-0 my-15 space-y-7">
-        <h1 class="text-center text-4xl sm:max-w-xl sm:text-5xl md:text-6xl md:max-w-2xl mx-auto font-semibold">Redifine Your <span class="text-[#FFCD29]">Style</span> Elevate Your Confidence</h1>
+        <h1 class="text-center text-4xl sm:max-w-xl sm:text-5xl md:text-6xl md:max-w-3xl mx-auto font-semibold">Redifine Your <span class="text-[#FFCD29]">Style</span> Elevate Your Confidence</h1>
         <p class="text-center max-w-md mx-auto text-sm sm:text-md md:text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est cupiditate delectus id tenetur necessitatibus excepturi debitis tempora! Adipisci, nisi suscipit.</p>
         <div class="flex gap-5 justify-center items-center">
           <button class="bg-[#FFCD29] px-5 py-1 rounded">SHOP NOW</button>
@@ -88,32 +88,32 @@
     <section id="promotions" class="py-10 max-w-7xl mx-auto px-4">
       <div class="grid md:grid-cols-2 gap-4">
         <!-- Banner 1 -->
-        <div class="relative rounded-lg overflow-hidden h-64" style="background-image: url({{ asset('img/diskon1.png') }}); background-size: auto; background-position: center;">
-          <div class="absolute inset-0 p-8 flex flex-col justify-center text-white">
-            <p class="text-sm font-medium mb-2">UP SALE <span class="text-[#FFAE00]">30%</span></p>
+        <div class="relative rounded-lg overflow-hidden h-56" style="background-image: url({{ asset('img/diskon1.png') }}); background-size: auto; background-position: center;">
+          <div class="absolute inset-0 p-8 text-white text-center">
+            <p class="text-lg font-bold mb-2">UP SALE <span class="text-[#FFAE00]">30%</span></p>
             <h2 class="text-3xl font-bold mb-2">Minimalis & Modern</h2>
-            <p class="text-sm mb-4 text-white/80">Lorem ipsum dolor sit amet consectetur adipisicing</p>
-            <button class="bg-white text-[#2D2D2D] px-6 py-2 rounded w-fit text-sm font-medium hover:bg-gray-100 transition">Shop Now</button>
+            <p class="text-sm max-w-sm mb-4 text-white mx-auto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero sapiente sit suscipit quas eos maiores?</p>
+            <button class="bg-white text-[#2D2D2D] px-6 py-2 rounded w-fit mx-auto text-sm font-semibold hover:bg-gray-100 transition">Shop Now</button>
           </div>
         </div>
         
         <!-- Banner 2 -->
-        <div class="relative rounded-lg overflow-hidden h-64" style="background-image: url({{ asset('img/diskon2.png') }}); background-size: auto; background-position: center;">
-          <div class="absolute inset-0 p-8 flex flex-col justify-center text-white">
-            <p class="text-sm font-medium mb-2">UP SALE <span class="text-[#FFAE00]">30%</span></p>
+        <div class="relative rounded-lg overflow-hidden h-56"   style="background-image: url({{ asset('img/diskon2.png') }}); background-size: auto; background-position: center;">
+          <div class="absolute inset-0 p-8 flex flex-col justify-center  text-white">
+            <p class="text-bold font-bold mb-2">UP SALE <span class="text-[#FFAE00]">30%</span></p>
             <h2 class="text-3xl font-bold mb-2">Lamp Collection</h2>
             <p class="text-sm mb-4 text-white/80">Lorem ipsum dolor sit amet consectetur adipisicing</p>
-            <button class="bg-[#7EC26D] text-white px-6 py-2 rounded w-fit text-sm font-medium hover:bg-[#6eb35b] transition">Shop Now</button>
+            <button class="bg-[#7EC26D] text-white px-6 py-2 rounded w-fit text-sm font-bold hover:bg-[#6eb35b] transition">Shop Now</button>
           </div>
         </div>
       </div>
       
       <!-- Banner 3 -->
-      <div class="relative bg-white rounded-lg overflow-hidden h-64 mt-4" style="background-image: url({{ asset('img/diskon3.png') }}); background-size: auto; background-position: center;">
-        <div class="absolute inset-0 p-8 flex flex-col justify-center">
-          <p class="text-sm font-medium mb-2 text-[#2D2D2D]">UP SALE <span class="text-[#FFAE00]">30%</span></p>
-          <h2 class="text-3xl font-bold mb-2 text-[#2D2D2D]">Save An Extra <span class="text-[#FF5555]">45%</span></h2>
-          <p class="text-sm mb-4 text-[#BDBDBD]">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+      <div class="relative bg-white rounded-lg overflow-hidden h-56 mt-4" style="background-image: url({{ asset('img/diskon3.png') }}); background-size: auto; background-position: center;">
+        <div class="absolute inset-0 p-8">
+          <p class="text-lg font-semibold mb-2 text-[#5B5353]">UP SALE <span class="text-[#FFAE00]">30%</span></p>
+          <h2 class="text-3xl font-bold mb-2 text-[#5B5353]">Save An Extra <span class="text-[#FF5555]">45%</span></h2>
+          <p class="text-sm mb-4 max-w-sm text-[#5B5353]">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque voluptatem corrupti odit.</p>
           <button class="bg-[#FF5555] text-white px-6 py-2 rounded w-fit text-sm font-medium hover:bg-[#ff4040] transition">Shop Now</button>
         </div>
       </div>
