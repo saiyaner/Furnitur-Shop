@@ -8,4 +8,5 @@
 
 @theme{
     --font-primary: "Montserrat",sans-serif;
+    --breakpoint-5xl: 70rem;
 }

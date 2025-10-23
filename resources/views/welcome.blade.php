@@ -49,7 +49,7 @@
     <section id="category" class="py-50 md:py-30">
       {{-- Judul --}}
       <h1 class="text-center text-5xl mb-20">CATEGORY</h1>
-        <div class="flex flex-wrap justify-center items-center gap-10 sm:mx-8">
+        <div class="flex flex-wrap justify-center items-center gap-5 sm:mx-8">
 
           {{-- Categori 1 --}}
           <a href="#" class="shadow-xl border border-gray-300 px-15 py-5 text-center rounded-md group hover:bg-[#ffcd29] transition ease-in-out">
@@ -85,48 +85,48 @@
     </section>
     
     <!-- Promotional Banners -->
-    <section id="promotions" class="py-10 max-w-7xl mx-auto px-4">
+    <section id="promotions" class="py-10 max-w-[68rem] mx-auto px-5">
       <div class="grid md:grid-cols-2 gap-4">
         <!-- Banner 1 -->
-        <div class="relative rounded-lg overflow-hidden h-56" style="background-image: url({{ asset('img/diskon1.png') }}); background-size: auto; background-position: center;">
-          <div class="absolute inset-0 p-8 text-white text-center">
-            <p class="text-lg font-bold mb-2">UP SALE <span class="text-[#FFAE00]">30%</span></p>
-            <h2 class="text-3xl font-bold mb-2">Minimalis & Modern</h2>
-            <p class="text-sm max-w-sm mb-4 text-white mx-auto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero sapiente sit suscipit quas eos maiores?</p>
-            <button class="bg-white text-[#2D2D2D] px-6 py-2 rounded w-fit mx-auto text-sm font-semibold hover:bg-gray-100 transition">Shop Now</button>
+        <div class="relative rounded-lg shadow-xl h-64 bg-auto bg-center object-center object-cover" style="background-image: url({{ asset('img/diskon1.png') }});">
+          <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center backdrop-brightness-75">
+            <p class="text-lg font-bold">UP SALE <span class="text-[#FFAE00]">30%</span></p>
+            <h2 class="text-2xl md:text-3xl font-bold">Minimalis & Modern</h2>
+            <p class="text-sm my-2 text-white mx-auto">Get 30% off all minimalist and modern furniture.</p>
+            <button class="bg-white mt-1 text-[#2D2D2D] px-6 py-2 rounded w-fit mx-auto text-sm font-semibold hover:bg-gray-100 transition">Shop Now</button>
           </div>
         </div>
         
         <!-- Banner 2 -->
-        <div class="relative rounded-lg overflow-hidden h-56"   style="background-image: url({{ asset('img/diskon2.png') }}); background-size: auto; background-position: center;">
-          <div class="absolute inset-0 p-8 flex flex-col justify-center  text-white">
-            <p class="text-bold font-bold mb-2">UP SALE <span class="text-[#FFAE00]">30%</span></p>
-            <h2 class="text-3xl font-bold mb-2">Lamp Collection</h2>
-            <p class="text-sm mb-4 text-white/80">Lorem ipsum dolor sit amet consectetur adipisicing</p>
-            <button class="bg-[#7EC26D] text-white px-6 py-2 rounded w-fit text-sm font-bold hover:bg-[#6eb35b] transition">Shop Now</button>
+        <div class="relative rounded-lg shadow-xl h-64 bg-auto bg-center object-center object-cover"   style="background-image: url({{ asset('img/diskon2.png') }});">
+          <div class="absolute inset-0 flex flex-col justify-center ms-5 text-white">
+            <p class="text-bold font-bold">UP SALE <span class="text-[#FFAE00]">30%</span></p>
+            <h2 class="text-2xl md:text-3xl font-bold mb-1">Lamp Collection</h2>
+            <p class="text-sm my-2 max-w-sm text-white/80">Brighten up your room with new lamps and save 30%!</p>
+            <button class="bg-[#7EC26D] mt-2 text-white px-6 py-2 rounded w-fit text-sm font-bold hover:bg-[#6eb35b] transition">Shop Now</button>
           </div>
         </div>
       </div>
       
       <!-- Banner 3 -->
-      <div class="relative bg-white rounded-lg overflow-hidden h-56 mt-4" style="background-image: url({{ asset('img/diskon3.png') }}); background-size: auto; background-position: center;">
-        <div class="absolute inset-0 p-8">
+      <div class="relative bg-white rounded-lg shadow-xl h-64 mt-4 bg-auto bg-center object-center object-cover border-l border-r border-t border-gray-300" style="background-image: url({{ asset('img/diskon3.png') }});">
+        <div class="absolute inset-0 ms-5 flex flex-col justify-center">
           <p class="text-lg font-semibold mb-2 text-[#5B5353]">UP SALE <span class="text-[#FFAE00]">30%</span></p>
-          <h2 class="text-3xl font-bold mb-2 text-[#5B5353]">Save An Extra <span class="text-[#FF5555]">45%</span></h2>
-          <p class="text-sm mb-4 max-w-sm text-[#5B5353]">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque voluptatem corrupti odit.</p>
-          <button class="bg-[#FF5555] text-white px-6 py-2 rounded w-fit text-sm font-medium hover:bg-[#ff4040] transition">Shop Now</button>
+          <h2 class="text-2xl md:text-3xl font-bold mb-2 text-[#5B5353]">Save An Extra <span class="text-[#FF5555]">45%</span></h2>
+          <p class="text-sm mb-4 max-w-sm text-[#5B5353]">Shop now and enjoy an additional 45% discount!</p>
+          <button class="bg-[#FF5555] text-white px-6 py-2 rounded w-fit text-sm font-bold hover:bg-[#ff4040] transition">Shop Now</button>
         </div>
       </div>
     </section>
 
     <!-- Popular Products -->
-    <section id="products" class="py-20 max-w-7xl mx-auto px-4">
+    <section id="products" class="py-20 max-w-[68rem] mx-auto px-4">
       <div class="flex justify-between items-center mb-10">
-        <h2 class="text-3xl font-semibold text-[#2D2D2D]">Popular Products</h2>
-        <a href="{{ url('products') }}" class="text-[#BDBDBD] hover:text-[#FFAE00] transition">See All</a>
+        <h2 class="text-xl md:text-3xl font-semibold text-[#2D2D2D]">Popular Products</h2>
+        <a href="{{ url('products') }}" class="text-sm md:text-md text-[#BDBDBD] hover:text-[#FFAE00] transition">See All</a>
       </div>
       
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
         <!-- Product Card 1 -->
         <div class="bg-white rounded-lg shadow-lg p-4">
           <div class="relative">
@@ -135,7 +135,7 @@
               <iconify-icon icon="material-symbols:table-bar-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
             </div>
           </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Wood Table</h3>
+          <h3 class="boldmedium text-[#2D2D2D] mb-1">Wood Table</h3>
           <div class="flex items-center gap-1 mb-2">
             <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
             <span class="text-xs text-[#2D2D2D]">4.3</span>
@@ -282,32 +282,32 @@
     </section>
 
     <!-- Mega Sale Banners -->
-    <section id="mega-sale" class="py-10 max-w-7xl mx-auto px-4">
-      <div class="grid md:grid-cols-2 gap-4">
+    <section id="mega-sale" class="py-10 max-w-[68rem] mx-auto px-4">
+      <div class="grid md:grid-cols-12 gap-4">
         <!-- Mega Sale 1 -->
-        <div class="relative bg-[#4A5F6A] rounded-lg overflow-hidden h-64">
-          <div class="absolute inset-0 p-8 flex flex-col justify-center text-white">
-            <p class="text-sm font-medium mb-2">MEGA SALE <span class="text-[#FFAE00]">65% OFF</span></p>
-            <h2 class="text-3xl font-bold mb-2">New Sofa Collections</h2>
-            <p class="text-sm mb-4 text-white/80">Lorem ipsum dolor sit amet consectetur adipisicing</p>
-            <button class="bg-white text-[#2D2D2D] px-6 py-2 rounded w-fit text-sm font-medium hover:bg-gray-100 transition">Shop Now</button>
+        <div class="relative md:col-span-7 bg-[#4A5F6A] rounded-lg h-64 bg-center object-center object-cover" style="background-image: url({{ asset('img/diskon4.png') }});">
+          <div class="absolute inset-0 ms-5 flex flex-col justify-center text-white">
+            <p class="text-md font-bold">MEGA SALE <span class="text-[#FFAE00]">65% OFF</span></p>
+            <h2 class="text-2xl md:text-3xl font-bold">New Sofa Collections</h2>
+            <p class="text-[0.8rem] sm:text-sm md:text-sm mb-3 text-white/80">Lorem ipsum dolor sit amet consectetur adipisicing</p>
+            <button class="bg-white text-[#2D2D2D] px-6 py-2 rounded w-fit text-sm font-bold hover:bg-gray-100 transition">Shop Now</button>
           </div>
         </div>
         
         <!-- Mega Sale 2 -->
-        <div class="relative bg-[#2D3234] rounded-lg overflow-hidden h-64">
-          <div class="absolute inset-0 p-8 flex flex-col justify-center text-white">
-            <p class="text-sm font-medium mb-2">MEGA SALE <span class="text-[#FFAE00]">65% OFF</span></p>
-            <h2 class="text-3xl font-bold mb-2">Chair Collection</h2>
-            <p class="text-sm mb-4 text-white/80">Lorem ipsum dolor sit amet consectetur adipisicing</p>
-            <button class="bg-[#7EC26D] text-white px-6 py-2 rounded w-fit text-sm font-medium hover:bg-[#6eb35b] transition">Shop Now</button>
+        <div class="relative md:col-span-5 bg-[#2D3234] rounded-lg h-64 bg-auto bg-center object-center object-cover" style="background-image: url({{ asset('img/diskon5.png') }});">
+          <div class="absolute inset-0 ms-5 flex flex-col justify-center text-white">
+            <p class="text-md font-bold">MEGA SALE <span class="text-[#FFAE00]">65% OFF</span></p>
+            <h2 class="text-2xl md:text-3xl font-bold">Chair Collection</h2>
+            <p class="text-[0.8rem] sm:text-sm md:text-sm mb-3 text-white/80">Lorem ipsum dolor sit amet consectetur adipisicing</p>
+            <button class="bg-[#7EC26D] text-white px-6 py-2 rounded w-fit text-sm font-bold hover:bg-[#6eb35b] transition">Shop Now</button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Features -->
-    <section id="features" class="py-20 max-w-7xl mx-auto px-4">
+    <section id="features" class="py-20 max-w-[68rem] mx-auto px-4">
       <div class="grid md:grid-cols-3 gap-8">
         <div class="flex gap-4 items-start">
           <iconify-icon icon="mdi:truck-delivery-outline" width="48" class="text-[#2D2D2D] flex-shrink-0"></iconify-icon>
