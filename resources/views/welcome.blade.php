@@ -343,7 +343,7 @@
             <h3 class="text-2xl font-bold text-white mb-4">LOGO | FURNITURE SHOP</h3>
             <p class="text-white/90 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
           </div>
-          
+
           <div>
             <h4 class="font-semibold text-white mb-4">CATEGORIES</h4>
             <ul class="space-y-2 text-white/90 text-sm">
