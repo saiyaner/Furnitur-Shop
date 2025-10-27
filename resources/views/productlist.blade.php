@@ -12,7 +12,7 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-6 lg:px-12 py-5">
             <div class="flex items-center justify-between">
-                <a href="http:/"><div class="text-2xl font-bold">LOGO</div></a>
+                <a href="http:/"></a>
                 
                 <nav class="hidden md:flex space-x-8">
                     <a href="#" class="text-gray-700 hover:text-gray-900 transition-colors">Discover</a>

@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('price', 12, 2);
-            $table->string('stock');
-            $table->string('category');
+            $table->decimal('price', 12, 2);
+            $table->integer('stock'); 
+            $table->enum('category', ['chair', 'table', 'sofa', 'lamp', 'bed', 'other'])->default('other');
+            $table->decimal('rate', 3, 1)->default(0.0);
             $table->string('color');
-            $table->string('description');
+            $table->text('description');
             $table->string('image')->nullable();
             $table->timestamps();
         });
@@ -32,4 +33,3 @@ return new class extends Migration
         Schema::dropIfExists('products');
     }
 };
-

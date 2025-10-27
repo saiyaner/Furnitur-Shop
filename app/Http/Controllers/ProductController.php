@@ -12,4 +12,11 @@ class ProductController extends Controller
         $products = Product::all();
         return view('productlist', compact('products'));
     }
+
+    //menunjukkan data produk yang populer (banyak dilihat)
+    public function popular()
+    {
+        $products = Product::orderBy('rate')->take(8)->get(); // Get top 8
+        return view('welcome', compact('products'));
+    }
 }

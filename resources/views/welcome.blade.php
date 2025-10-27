@@ -125,159 +125,35 @@
         <h2 class="text-xl md:text-3xl font-semibold text-[#2D2D2D]">Popular Products</h2>
         <a href="{{ url('products') }}" class="text-sm md:text-md text-[#BDBDBD] hover:text-[#FFAE00] transition">See All</a>
       </div>
-      
+
       <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-        <!-- Product Card 1 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="material-symbols:table-bar-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
+          @foreach ($products as $product)
+          <div class="bg-white rounded-lg shadow-lg p-4 relative">
+              <!-- Popular Badge -->
+              @if($product->rate >= 4.5)
+              <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                  POPULAR
+              </div>
+              @endif
+              
+              <div class="relative">
+                  <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
+                  <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
+                      <iconify-icon icon="{{ $product->image }}" width="80" class="text-[#BDBDBD]"></iconify-icon>
+                  </div>
+              </div>
+              <h3 class="boldmedium text-[#2D2D2D] mb-1">{{ $product->name }}</h3>
+              <div class="flex items-center gap-1 mb-2">
+                  <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
+                  <span class="text-xs text-[#2D2D2D]">{{ $product->formatted_rate }}</span>
+                  <span class="text-xs text-gray-500">({{ $product->rate }})</span>
+              </div>
+              <div class="flex justify-between items-center">
+                  <span class="text-lg font-bold text-[#2D2D2D]">${{ number_format($product->price, 2) }}</span>
+                  <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
+              </div>
           </div>
-          <h3 class="boldmedium text-[#2D2D2D] mb-1">Wood Table</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
-
-        <!-- Product Card 2 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="mdi:drawer" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
-          </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Wood Drawer</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
-
-        <!-- Product Card 3 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="material-symbols:table-bar-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
-          </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Wood Oval</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
-
-        <!-- Product Card 4 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="mdi:lamp-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
-          </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Black Lamp</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
-
-        <!-- Product Card 5 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="mdi:sofa-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
-          </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Wood Table</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
-
-        <!-- Product Card 6 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="material-symbols:chair-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
-          </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Wood Drawer</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
-
-        <!-- Product Card 7 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="material-symbols:chair-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
-          </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Wood Chair</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
-
-        <!-- Product Card 8 -->
-        <div class="bg-white rounded-lg shadow-lg p-4">
-          <div class="relative">
-            <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-            <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-              <iconify-icon icon="mdi:lamp-outline" width="80" class="text-[#BDBDBD]"></iconify-icon>
-            </div>
-          </div>
-          <h3 class="text-sm font-medium text-[#2D2D2D] mb-1">Brass Lamp</h3>
-          <div class="flex items-center gap-1 mb-2">
-            <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-            <span class="text-xs text-[#2D2D2D]">4.3</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-bold text-[#2D2D2D]">35$</span>
-            <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-          </div>
-        </div>
+          @endforeach
       </div>
     </section>
 
