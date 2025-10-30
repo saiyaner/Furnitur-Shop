@@ -27,7 +27,7 @@
           <a href="#">
             <iconify-icon icon="mdi:cart" width="26"></iconify-icon>
           </a>
-          <a href="#">
+          <a href="{{ url('login') }}">
             <iconify-icon icon="mdi:user" width="26"></iconify-icon>
           </a>
         </div>

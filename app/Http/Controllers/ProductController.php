@@ -19,4 +19,9 @@ class ProductController extends Controller
         $products = Product::orderBy('rate')->take(8)->get(); // Get top 8
         return view('welcome', compact('products'));
     }
+
+    public function detailsproduct ($id, $name) {
+        $product = Product::find($id, $name);
+        return view('detailproduct', compact('product'));
+    }
 }

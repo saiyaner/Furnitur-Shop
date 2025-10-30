@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 Route::get('/', [ProductController::class, 'popular']);
+Route::get('/detailproduct/{id}/{name}', [ProductController::class, 'detailsproduct']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
