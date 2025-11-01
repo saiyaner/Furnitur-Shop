@@ -14,7 +14,7 @@
 <body class="bg-gray-50">
     <!-- Header -->
     <header class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-4">
+        <div class="md:mx-20 px-4 py-4">
             <div class="flex justify-between items-center">
                 <a href="/"><div class="text-2xl font-bold">LOGO</div></a>
                 <nav class="hidden md:flex space-x-8">
@@ -25,45 +25,44 @@
                 </nav>
                 <div class="flex items-center space-x-4">
                     <button class="text-gray-700 hover:text-gray-900">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
+                        <iconify-icon icon="mdi:cart" width="26"></iconify-icon>
                     </button>
                     <a href="{{ url ('login') }}"><button class="text-gray-700 hover:text-gray-900">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
+                        <iconify-icon icon="mdi:user" width="26"></iconify-icon>
                     </button></a>
                 </div>
             </div>
-            <div class="mt-4">
-                <input type="text" placeholder="Search furniture here..." class="w-full md:w-96 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400">
-            </div>
-            <div class="mt-4 flex space-x-6 text-sm">
-                <a href="#chair" class="text-gray-700 hover:text-gray-900">Chair</a>
-                <a href="#table" class="text-gray-700 hover:text-gray-900">Table</a>
-                <a href="#sofa" class="text-gray-700 hover:text-gray-900">Sofa</a>
-                <a href="#lamp" class="text-gray-700 hover:text-gray-900">Lamp</a>
-                <a href="#bed" class="text-gray-700 hover:text-gray-900">Bed</a>
+            <div class="my-5">
+                <div class="mt-5 flex justify-center items-center">
+                    <input type="text" placeholder="Search furniture here..." class="w-full md:w-96 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-400">
+                </div>
+                <div class="mt-4 flex flex-wrap justify-center gap-5 text-sm">
+                    <a href="#chair" class="text-gray-700 px-5 py-1 border rounded hover:text-white hover:bg-gray-900 transition">Chair</a>
+                    <a href="#table" class="text-gray-700 px-5 py-1 border rounded hover:text-white hover:bg-gray-900 transition">Table</a>
+                    <a href="#sofa" class="text-gray-700 px-5 py-1 border rounded hover:text-white hover:bg-gray-900 transition">Sofa</a>
+                    <a href="#lamp" class="text-gray-700 px-5 py-1 border rounded hover:text-white hover:bg-gray-900 transition">Lamp</a>
+                    <a href="#bed" class="text-gray-700 px-5 py-1 border rounded hover:text-white hover:bg-gray-900 transition">Bed</a>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-8">
+    <main class="max-w-5xl mx-auto px-4 py-8">
         <!-- Recommend For You Section -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-6">Recommend For You</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+
                 <!-- Product Card -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
                     <div class="relative p-4">
-                        <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
+                        <button class="absolute top-1 left-0 p-2 text-gray-600">
+                            <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                         </button>
-                        <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                        <div class="flex justify-center items-center h-48 text-6xl">
+                            <img src="{{ asset('img/image 5.png') }}">
+                        </div>
                     </div>
                     <div class="p-4">
                         <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -74,8 +73,8 @@
                             <span class="text-xs ml-1 text-gray-600">4.3</span>
                         </div>
                         <div class="flex items-center justify-between mt-4">
-                            <span class="text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                            <span class="text-sm md:text-lg font-bold">35$</span>
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
                                 BUY NOW
                             </button>
                         </div>
@@ -83,14 +82,14 @@
                 </div>
 
                 <!-- Repeat for 3 more cards -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
                     <div class="relative p-4">
-                        <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
+                        <button class="absolute top-1 left-0 p-2 text-gray-600">
+                            <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                         </button>
-                        <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                        <div class="flex justify-center items-center h-48 text-6xl">
+                            <img src="{{ asset('img/image 12.png') }}" alt="">
+                        </div>
                     </div>
                     <div class="p-4">
                         <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -102,21 +101,21 @@
                         </div>
                         <div class="flex items-center justify-between mt-4">
                             <span class="text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
                                 BUY NOW
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
                     <div class="relative p-4">
-                        <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
+                        <button class="absolute top-1 left-0 p-2 text-gray-600">
+                            <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                         </button>
-                        <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                        <div class="flex justify-center items-center h-48 text-6xl">
+                            <img src="{{ asset('img/image 5.png') }}" alt="">
+                        </div>
                     </div>
                     <div class="p-4">
                         <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -128,21 +127,21 @@
                         </div>
                         <div class="flex items-center justify-between mt-4">
                             <span class="text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
                                 BUY NOW
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
                     <div class="relative p-4">
-                        <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
+                        <button class="absolute top-1 left-0 p-2 text-gray-600">
+                            <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                         </button>
-                        <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                        <div class="flex justify-center items-center h-48 text-6xl">
+                            <img src="{{ asset('img/image 12.png') }}" alt="">
+                        </div>
                     </div>
                     <div class="p-4">
                         <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -154,7 +153,7 @@
                         </div>
                         <div class="flex items-center justify-between mt-4">
                             <span class="text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
                                 BUY NOW
                             </button>
                         </div>
@@ -1738,6 +1737,7 @@
         </div>
     </footer>
 
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script>
         // Carousel scroll function
         function scrollCarousel(category, direction) {
