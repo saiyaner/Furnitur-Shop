@@ -55,31 +55,35 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
 
                 <!-- Product Card -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
-                    <div class="relative p-4">
-                        <button class="absolute top-1 left-0 p-2 text-gray-600">
-                            <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-                        </button>
-                        <div class="flex justify-center items-center h-48 text-6xl">
-                            <img src="{{ asset('img/image 5.png') }}">
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                        <div class="flex items-center mt-1">
-                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                            </svg>
-                            <span class="text-xs ml-1 text-gray-600">4.3</span>
-                        </div>
-                        <div class="flex items-center justify-between mt-4">
-                            <span class="text-sm md:text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
-                                BUY NOW
+                @foreach ($products as $product)
+                <a href="{{ route('detailproduct', ['id' => $product->id]) }}">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
+                        <div class="relative p-4">
+                            <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                             </button>
+                            <div class="flex justify-center items-center h-48 text-6xl">
+                                <img src="{{ $product->image }}" class="h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
+                            <div class="flex items-center mt-1">
+                                <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                </svg>
+                                <span class="text-xs ml-1 text-gray-600">{{ $product->rate }}</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-4">
+                                <span class="text-sm md:text-lg font-bold">${{ $product->price }}</span>
+                                <button onclick="buyNow('{{ $product->name }}', {{ $product->price }})" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
+                                    BUY NOW
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
+                @endforeach
 
                 <!-- Repeat for 3 more cards -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">

@@ -20,8 +20,13 @@ class ProductController extends Controller
         return view('welcome', compact('products'));
     }
 
-    public function detailsproduct ($id, $name) {
-        $product = Product::find($id, $name);
+    // PERBAIKAN: Method detailsproduct yang benar
+    public function detailsproduct($id)
+    {
+        $product = Product::find($id);
+        if (!$product) {
+            abort(404);
+        }
         return view('detailproduct', compact('product'));
     }
 }
