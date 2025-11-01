@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', [ProductController::class, 'popular']);
 Route::get('/detailproduct/{id}', [ProductController::class, 'detailsproduct'])->name('detailproduct');
@@ -18,5 +19,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/products', [ProductController::class, 'index'])->name('productslist');
+
+// Cart routes
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
+Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/checkout', [CartController::class, 'index'])->name('checkout');
 
 require __DIR__.'/auth.php';
