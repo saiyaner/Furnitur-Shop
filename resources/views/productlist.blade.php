@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Furniture Shop</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
     <style>
         .carousel-container {
             scroll-behavior: smooth;
@@ -76,7 +76,7 @@
                             </div>
                             <div class="flex items-center justify-between mt-4">
                                 <span class="text-sm md:text-lg font-bold">${{ $product->price }}</span>
-                                <button onclick="buyNow('{{ $product->name }}', {{ $product->price }})" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
+                                <button onclick="buyNow('{{ $product->name }}', {{ $product->price }})" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1  rounded-full text-sm">
                                     BUY NOW
                                 </button>
                             </div>
@@ -84,6 +84,32 @@
                     </div>
                 </a>
                 @endforeach
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
+                    <div class="relative p-4">
+                        <button class="absolute top-1 left-0 p-2 text-gray-600">
+                            <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
+                        </button>
+                        <div class="flex justify-center items-center h-48 text-6xl">
+                            <img src="{{ asset('img/image 5.png') }}" alt="">
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
+                        <div class="flex items-center mt-1">
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                            <span class="text-xs ml-1 text-gray-600">4.3</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-4">
+                            <span class="text-lg font-bold">35$</span>
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1  rounded-full text-sm">
+                                BUY NOW
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Repeat for 3 more cards -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform md:hover:scale-105">
@@ -105,7 +131,7 @@
                         </div>
                         <div class="flex items-center justify-between mt-4">
                             <span class="text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1  rounded-full text-sm">
                                 BUY NOW
                             </button>
                         </div>
@@ -131,7 +157,7 @@
                         </div>
                         <div class="flex items-center justify-between mt-4">
                             <span class="text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1  rounded-full text-sm">
                                 BUY NOW
                             </button>
                         </div>
@@ -157,7 +183,7 @@
                         </div>
                         <div class="flex items-center justify-between mt-4">
                             <span class="text-lg font-bold">35$</span>
-                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-5 py-2 rounded md:rounded-full text-sm">
+                            <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1  rounded-full text-sm">
                                 BUY NOW
                             </button>
                         </div>
@@ -168,7 +194,7 @@
 
         <!-- Chair Section with Carousel -->
         <section class="mb-12" id ="chair">
-            <h2 class="text-2xl font-bold mb-6">Chair</h2>
+            <h2 class="text-2xl font-bold mb-6">Chair</h2> 
             <div class="relative">
                 <button onclick="scrollCarousel('chair', -1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -180,17 +206,17 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
-                <div id="chair-carousel" class="flex overflow-x-auto carousel-container gap-6 px-12 pb-4 scrollbar-hide" style="scroll-snap-type: x mandatory;">
+                <div id="chair-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide" style="scroll-snap-type: x mandatory;">
                     <!-- Product Cards -->
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -202,22 +228,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -229,22 +255,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -256,22 +282,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -283,22 +309,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -310,22 +336,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -337,22 +363,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -364,22 +390,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -391,22 +417,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -418,22 +444,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -445,22 +471,22 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64 scroll-snap-align-start">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                                <div class="flex justify-center items-center h-48 text-6xl">
+                                    <img src="{{ asset('img/image 12.png') }}" alt="">
+                                </div>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
@@ -472,7 +498,7 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
@@ -498,14 +524,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
-                <div id="table-carousel" class="flex overflow-x-auto carousel-container gap-6 px-12 pb-4 scrollbar-hide">
-                    <div class="flex-shrink-0 w-64">
+                <div id="table-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -519,20 +543,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -546,20 +568,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -573,20 +593,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -600,20 +618,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -627,20 +643,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -654,19 +668,17 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div><div class="flex-shrink-0 w-64">
+                    </div><div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -680,47 +692,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
-                                        BUY NOW
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 w-64">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
-                            <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
-                                </button>
-                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                                <div class="flex items-center mt-1">
-                                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                                    </svg>
-                                    <span class="text-xs ml-1 text-gray-600">4.3</span>
-                                </div>
-                                <div class="flex items-center justify-between mt-4">
-                                    <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -734,20 +717,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -761,7 +742,32 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
+                                        BUY NOW
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 w-56 snap-center">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                            <div class="relative p-4">
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
+                                </button>
+                                <div class="flex justify-center items-center h-48 text-6xl">💡</div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
+                                <div class="flex items-center mt-1">
+                                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                    </svg>
+                                    <span class="text-xs ml-1 text-gray-600">4.3</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-4">
+                                    <span class="text-lg font-bold">35$</span>
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
@@ -769,13 +775,11 @@
                         </div>
                     </div>
 
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -789,19 +793,17 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div><div class="flex-shrink-0 w-64">
+                    </div><div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -815,20 +817,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -842,7 +842,7 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
@@ -867,14 +867,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
-                <div id="sofa-carousel" class="flex overflow-x-auto carousel-container gap-6 px-12 pb-4 scrollbar-hide">
-                    <div class="flex-shrink-0 w-64">
+                <div id="sofa-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -888,20 +886,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -915,20 +911,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -942,20 +936,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -969,20 +961,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -996,20 +986,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1023,20 +1011,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1050,7 +1036,7 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
@@ -1075,14 +1061,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
-                <div id="lamp-carousel" class="flex overflow-x-auto carousel-container gap-6 px-12 pb-4 scrollbar-hide">
-                    <div class="flex-shrink-0 w-64">
+                <div id="lamp-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1096,20 +1080,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1123,20 +1105,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1150,20 +1130,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1177,20 +1155,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1204,20 +1180,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1231,20 +1205,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1258,20 +1230,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1285,20 +1255,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1312,20 +1280,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1339,20 +1305,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1366,7 +1330,7 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
@@ -1391,14 +1355,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
-                <div id="bed-carousel" class="flex overflow-x-auto carousel-container gap-6 px-12 pb-4 scrollbar-hide">
-                    <div class="flex-shrink-0 w-64">
+                <div id="bed-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1412,20 +1374,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1439,20 +1399,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1466,20 +1424,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1493,20 +1449,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1520,20 +1474,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1547,20 +1499,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1574,20 +1524,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1601,20 +1549,18 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-shrink-0 w-64">
+                    <div class="flex-shrink-0 w-56 snap-center">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                             <div class="relative p-4">
-                                <button class="absolute top-6 left-6 bg-gray-100 p-2 rounded-full hover:bg-gray-200">
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
+                                <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                 </button>
                                 <div class="flex justify-center items-center h-48 text-6xl">💡</div>
                             </div>
@@ -1628,7 +1574,7 @@
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
                                     <span class="text-lg font-bold">35$</span>
-                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-full text-sm">
+                                    <button onclick="buyNow('Shop Lamp', 35)" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-1 rounded-full text-sm">
                                         BUY NOW
                                     </button>
                                 </div>
