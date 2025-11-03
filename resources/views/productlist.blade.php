@@ -1619,7 +1619,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-yellow-400 text-black py-12">
+    <footer class="bg-[#FFAE00] text-black py-12">
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid md:grid-cols-3 gap-8">
                 <div>
