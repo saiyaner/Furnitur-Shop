@@ -50,4 +50,9 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function showProfile(){
+        $user = Auth::user('image');
+        return view('welcome', compact('image'));
+    }
 }

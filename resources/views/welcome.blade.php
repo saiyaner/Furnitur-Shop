@@ -27,9 +27,16 @@
           <a href="#">
             <iconify-icon icon="mdi:cart" width="26"></iconify-icon>
           </a>
+          @guest
           <a href="{{ url('login') }}">
             <iconify-icon icon="mdi:user" width="26"></iconify-icon>
           </a>
+          @endguest
+          @auth
+          <a href="{{ url('dashboard') }}" class="w-8 h-8 rounded-full overflow-hidden border border-white/50">
+            <img src="{{ asset(Auth::user()->image) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 object-cover">
+          </a>
+          @endauth
         </div>
       </nav>
       
