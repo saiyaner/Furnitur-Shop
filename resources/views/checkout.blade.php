@@ -8,114 +8,6 @@
     @vite('resources/css/app.css')
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script>
-        // ===== KONFIGURASI - MUDAH DIUBAH =====
-        const PROMO_CODES = {
-            'WELCOME10': 10,
-            'DISCOUNT15': 15,
-            'SAVE20': 20,
-            'SPECIAL25': 25,
-            'FURNITURE30': 30
-        };
-        
-        // ===== VARIABEL GLOBAL =====
-        let currentDiscount = 0;
-
-        // ===== FUNGSI UPDATE QUANTITY =====
-        function updateQuantity(button, change) {
-            const container = button.closest('.quantity-control');
-            const quantityElement = container?.querySelector('.quantity-display');
-            if (!quantityElement) return;
-
-            const currentQty = parseInt(quantityElement.textContent) || 1;
-            const stockLimit = parseInt(quantityElement.dataset.stock || 999);
-            const newQty = Math.max(1, Math.min(stockLimit, currentQty + change));
-            
-            quantityElement.textContent = newQty;
-            
-            let cartKey;
-            try {
-                cartKey = atob(container.dataset.cartKey);
-            } catch (e) {
-                quantityElement.textContent = currentQty;
-                alert('Error memproses data');
-                return;
-            }
-            
-            fetch('{{ route("cart.update-quantity") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ cart_key: cartKey, quantity: newQty })
-            })
-            .then(r => r.ok ? r.json() : r.json().then(e => Promise.reject(e)))
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('total-amount').textContent = data.total_amount;
-                    document.getElementById('total-price').textContent = '$' + data.total_price;
-                    calculateGrandTotal();
-                } else {
-                    quantityElement.textContent = currentQty;
-                    alert(data.message || 'Gagal update quantity');
-                }
-            })
-            .catch(() => {
-                quantityElement.textContent = currentQty;
-                alert('Terjadi kesalahan');
-            });
-        }
-
-        // ===== FUNGSI PROMO CODE =====
-        function applyPromoCode() {
-            const promoCode = document.getElementById('promo-code-input').value.trim().toUpperCase();
-            const promoMessage = document.getElementById('promo-message');
-            const discountRow = document.getElementById('discount-row');
-            
-            promoMessage.classList.add('hidden');
-            
-            if (!promoCode) {
-                currentDiscount = 0;
-                discountRow.classList.add('hidden');
-                discountRow.classList.remove('flex');
-                calculateGrandTotal();
-                return;
-            }
-            
-            if (PROMO_CODES[promoCode]) {
-                currentDiscount = PROMO_CODES[promoCode];
-                discountRow.classList.remove('hidden');
-                discountRow.classList.add('flex');
-                document.getElementById('discount-value').textContent = currentDiscount + '%';
-                showMessage(promoMessage, 'Promo code berhasil diterapkan!', 'green');
-            } else {
-                currentDiscount = 0;
-                discountRow.classList.add('hidden');
-                discountRow.classList.remove('flex');
-                showMessage(promoMessage, 'Promo code tidak valid!', 'red');
-            }
-            calculateGrandTotal();
-        }
-
-        function showMessage(element, text, color) {
-            element.textContent = text;
-            element.classList.remove('hidden', 'text-red-500', 'text-green-600');
-            element.classList.add(color === 'green' ? 'text-green-600' : 'text-red-500');
-        }
-
-        // ===== FUNGSI HITUNG TOTAL =====
-        function calculateGrandTotal() {
-            const totalPriceEl = document.getElementById('total-price');
-            const grandTotalEl = document.getElementById('grand-total');
-            if (!totalPriceEl || !grandTotalEl) return;
-            
-            const totalPrice = parseFloat(totalPriceEl.textContent.replace('$', '').replace(/,/g, '')) || 0;
-            const grandTotal = totalPrice * (1 - currentDiscount / 100);
-            grandTotalEl.textContent = '$' + grandTotal.toFixed(2);
-        }
-    </script>
 </head>
 <body class="bg-yellow-400 min-h-screen">
     <!-- Header -->
@@ -130,11 +22,22 @@
                     <a href="{{ route('checkout') }}" class="text-gray-900 hover:text-gray-700 relative">
                         <iconify-icon icon="mdi:cart" width="26"></iconify-icon>
                     </a>
+                    @guest
                     <a href="{{ url('login') }}">
-                        <button class="text-gray-900 hover:text-gray-700">
-                            <iconify-icon icon="mdi:user" width="26"></iconify-icon>
-                        </button>
+                        <iconify-icon icon="mdi:user" width="26"></iconify-icon>
                     </a>
+                    @endguest
+                    @auth
+                    <a href="{{ Auth::user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}" class="w-8 h-8 rounded-full overflow-hidden border border-white/50">
+                        @if(Auth::user()->image)
+                        <img src="{{ asset(Auth::user()->image) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 object-cover">
+                        @else
+                        <div class="w-8 h-8 bg-gray-400 flex items-center justify-center text-white text-xs font-bold">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                        @endif
+                    </a>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -284,5 +187,112 @@
             </div>
         </div>
     </main>
+
+    <script>
+        // ===== KONFIGURASI - MUDAH DIUBAH =====
+        const PROMO_CODES = {
+            'DISCOUNT10': 10,
+            'PROMO50': 50,
+            'GRATIS': 100
+        };
+        
+        // ===== VARIABEL GLOBAL =====
+        let currentDiscount = 0;
+
+        // ===== FUNGSI UPDATE QUANTITY =====
+        function updateQuantity(button, change) {
+            const container = button.closest('.quantity-control');
+            const quantityElement = container?.querySelector('.quantity-display');
+            if (!quantityElement) return;
+
+            const currentQty = parseInt(quantityElement.textContent) || 1;
+            const stockLimit = parseInt(quantityElement.dataset.stock || 999);
+            const newQty = Math.max(1, Math.min(stockLimit, currentQty + change));
+            
+            quantityElement.textContent = newQty;
+            
+            let cartKey;
+            try {
+                cartKey = atob(container.dataset.cartKey);
+            } catch (e) {
+                quantityElement.textContent = currentQty;
+                alert('Error memproses data');
+                return;
+            }
+            
+            fetch('{{ route("cart.update-quantity") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ cart_key: cartKey, quantity: newQty })
+            })
+            .then(r => r.ok ? r.json() : r.json().then(e => Promise.reject(e)))
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('total-amount').textContent = data.total_amount;
+                    document.getElementById('total-price').textContent = '$' + data.total_price;
+                    calculateGrandTotal();
+                } else {
+                    quantityElement.textContent = currentQty;
+                    alert(data.message || 'Gagal update quantity');
+                }
+            })
+            .catch(() => {
+                quantityElement.textContent = currentQty;
+                alert('Terjadi kesalahan');
+            });
+        }
+
+        // ===== FUNGSI PROMO CODE =====
+        function applyPromoCode() {
+            const promoCode = document.getElementById('promo-code-input').value.trim().toUpperCase();
+            const promoMessage = document.getElementById('promo-message');
+            const discountRow = document.getElementById('discount-row');
+            
+            promoMessage.classList.add('hidden');
+            
+            if (!promoCode) {
+                currentDiscount = 0;
+                discountRow.classList.add('hidden');
+                discountRow.classList.remove('flex');
+                calculateGrandTotal();
+                return;
+            }
+            
+            if (PROMO_CODES[promoCode]) {
+                currentDiscount = PROMO_CODES[promoCode];
+                discountRow.classList.remove('hidden');
+                discountRow.classList.add('flex');
+                document.getElementById('discount-value').textContent = currentDiscount + '%';
+                showMessage(promoMessage, 'Promo code berhasil diterapkan!', 'green');
+            } else {
+                currentDiscount = 0;
+                discountRow.classList.add('hidden');
+                discountRow.classList.remove('flex');
+                showMessage(promoMessage, 'Promo code tidak valid!', 'red');
+            }
+            calculateGrandTotal();
+        }
+
+        function showMessage(element, text, color) {
+            element.textContent = text;
+            element.classList.remove('hidden', 'text-red-500', 'text-green-600');
+            element.classList.add(color === 'green' ? 'text-green-600' : 'text-red-500');
+        }
+
+        // ===== FUNGSI HITUNG TOTAL =====
+        function calculateGrandTotal() {
+            const totalPriceEl = document.getElementById('total-price');
+            const grandTotalEl = document.getElementById('grand-total');
+            if (!totalPriceEl || !grandTotalEl) return;
+            
+            const totalPrice = parseFloat(totalPriceEl.textContent.replace('$', '').replace(/,/g, '')) || 0;
+            const grandTotal = totalPrice * (1 - currentDiscount / 100);
+            grandTotalEl.textContent = '$' + grandTotal.toFixed(2);
+        }
+    </script>
 </body>
 </html>

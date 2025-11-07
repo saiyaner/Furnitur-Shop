@@ -8,145 +8,6 @@
     @vite('resources/css/app.css')
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script>
-        // Simple JavaScript for quantity selector and color selection
-        let quantity = 1;
-        let selectedColor = '{{ $product->color }}';
-        const price = {{ $product->price }};
-        const productId = {{ $product->id }};
-        
-        const maxStock = {{ $product->stock }};
-        
-        function updateQuantity(change) {
-            const newQuantity = quantity + change;
-            quantity = Math.max(1, Math.min(maxStock, newQuantity));
-            document.getElementById('quantity').textContent = quantity;
-            updateTotalPrice();
-        }
-        
-        function selectColor(color) {
-            selectedColor = color;
-            // Update UI
-            document.querySelectorAll('.color-btn').forEach(btn => {
-                if (btn.dataset.color === color) {
-                    btn.classList.add('bg-yellow-100', 'border-yellow-400');
-                    btn.classList.remove('bg-gray-100', 'border-gray-300');
-                } else {
-                    btn.classList.remove('bg-yellow-100', 'border-yellow-400');
-                    btn.classList.add('bg-gray-100', 'border-gray-300');
-                }
-            });
-            document.getElementById('selected-color').textContent = color;
-        }
-        
-        function updateTotalPrice() {
-            const total = (price * quantity).toFixed(2);
-            document.getElementById('total-price').textContent = `$${total}`;
-        }
-        
-        // Cart functionality
-        function loadCartCount() {
-            fetch('{{ route("cart.count") }}')
-                .then(response => response.json())
-                .then(data => {
-                    updateCartBadge(data.cart_count);
-                })
-                .catch(error => {
-                    console.error('Error loading cart count:', error);
-                });
-        }
-        
-        function updateCartBadge(count) {
-            const cartBadge = document.getElementById('cart-badge');
-            if (count > 0) {
-                cartBadge.textContent = count > 99 ? '99+' : count;
-                cartBadge.classList.remove('hidden');
-                cartBadge.classList.add('flex');
-            } else {
-                cartBadge.classList.add('hidden');
-                cartBadge.classList.remove('flex');
-            }
-        }
-        
-        function addToCart() {
-            const button = document.getElementById('add-to-cart-btn');
-            const originalText = button.textContent;
-            button.disabled = true;
-            button.textContent = 'Adding...';
-            
-            fetch('{{ route("cart.add") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    product_id: productId,
-                    color: selectedColor
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateCartBadge(data.cart_count);
-                    showNotification(data.message, 'success');
-                } else {
-                    showNotification(data.message || 'Gagal menambahkan produk ke keranjang', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('Terjadi kesalahan saat menambahkan ke keranjang', 'error');
-            })
-            .finally(() => {
-                button.disabled = false;
-                button.textContent = originalText;
-            });
-        }
-        
-        function showNotification(message, type = 'success') {
-            // Remove existing notification if any
-            const existingNotification = document.getElementById('cart-notification');
-            if (existingNotification) {
-                existingNotification.remove();
-            }
-            
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.id = 'cart-notification';
-            notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full opacity-0 ${
-                type === 'success' ? 'bg-green-500' : 'bg-red-500'
-            } text-white`;
-            notification.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <iconify-icon icon="${type === 'success' ? 'mdi:check-circle' : 'mdi:alert-circle'}" width="24" height="24"></iconify-icon>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Animate in
-            setTimeout(() => {
-                notification.classList.remove('translate-x-full', 'opacity-0');
-                notification.classList.add('translate-x-0', 'opacity-100');
-            }, 10);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                notification.classList.remove('translate-x-0', 'opacity-100');
-                notification.classList.add('translate-x-full', 'opacity-0');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 3000);
-        }
-        
-        // Load cart count on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCartCount();
-        });
-    </script>
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -162,14 +23,22 @@
                         <iconify-icon icon="mdi:cart" width="26"></iconify-icon>
                         <span id="cart-badge" class="absolute -top-2 -right-2 bg-yellow-400 text-white text-xs font-bold rounded-full w-5 h-5 items-center justify-center hidden">0</span>
                     </a>
+                    @guest
                     <a href="{{ url('login') }}">
-                        <button class="text-gray-700 hover:text-gray-900">
-                            <iconify-icon icon="mdi:user" width="26"></iconify-icon>
-                        </button>
+                        <iconify-icon icon="mdi:user" width="26"></iconify-icon>
                     </a>
-                    <button class="text-gray-700 hover:text-gray-900">
-                        <iconify-icon icon="mdi:magnify" width="26"></iconify-icon>
-                    </button>
+                    @endguest
+                    @auth
+                    <a href="{{ Auth::user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}" class="w-8 h-8 rounded-full overflow-hidden border border-white/50">
+                        @if(Auth::user()->image)
+                        <img src="{{ asset(Auth::user()->image) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 object-cover">
+                        @else
+                        <div class="w-8 h-8 bg-gray-400 flex items-center justify-center text-white text-xs font-bold">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                        @endif
+                    </a>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -183,7 +52,7 @@
             <div>
                 <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
                     @if($product->image)
-                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg mb-6">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg mb-6">
                     @else
                         <div class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center mb-6">
                             <span class="text-gray-400">No Image</span>
@@ -384,5 +253,145 @@
             </div>
         </div>
     </footer>
+
+    <script>
+         // Simple JavaScript for quantity selector and color selection
+        let quantity = 1;
+        let selectedColor = '{{ $product->color }}';
+        const price = {{ $product->price }};
+        const productId = {{ $product->id }};
+        
+        const maxStock = {{ $product->stock }};
+        
+        function updateQuantity(change) {
+            const newQuantity = quantity + change;
+            quantity = Math.max(1, Math.min(maxStock, newQuantity));
+            document.getElementById('quantity').textContent = quantity;
+            updateTotalPrice();
+        }
+        
+        function selectColor(color) {
+            selectedColor = color;
+            // Update UI
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                if (btn.dataset.color === color) {
+                    btn.classList.add('bg-yellow-100', 'border-yellow-400');
+                    btn.classList.remove('bg-gray-100', 'border-gray-300');
+                } else {
+                    btn.classList.remove('bg-yellow-100', 'border-yellow-400');
+                    btn.classList.add('bg-gray-100', 'border-gray-300');
+                }
+            });
+            document.getElementById('selected-color').textContent = color;
+        }
+        
+        function updateTotalPrice() {
+            const total = (price * quantity).toFixed(2);
+            document.getElementById('total-price').textContent = `$${total}`;
+        }
+        
+        // Cart functionality
+        function loadCartCount() {
+            fetch('{{ route("cart.count") }}')
+                .then(response => response.json())
+                .then(data => {
+                    updateCartBadge(data.cart_count);
+                })
+                .catch(error => {
+                    console.error('Error loading cart count:', error);
+                });
+        }
+        
+        function updateCartBadge(count) {
+            const cartBadge = document.getElementById('cart-badge');
+            if (count > 0) {
+                cartBadge.textContent = count > 99 ? '99+' : count;
+                cartBadge.classList.remove('hidden');
+                cartBadge.classList.add('flex');
+            } else {
+                cartBadge.classList.add('hidden');
+                cartBadge.classList.remove('flex');
+            }
+        }
+        
+        function addToCart() {
+            const button = document.getElementById('add-to-cart-btn');
+            const originalText = button.textContent;
+            button.disabled = true;
+            button.textContent = 'Adding...';
+            
+            fetch('{{ route("cart.add") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    color: selectedColor
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateCartBadge(data.cart_count);
+                    showNotification(data.message, 'success');
+                } else {
+                    showNotification(data.message || 'Gagal menambahkan produk ke keranjang', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Terjadi kesalahan saat menambahkan ke keranjang', 'error');
+            })
+            .finally(() => {
+                button.disabled = false;
+                button.textContent = originalText;
+            });
+        }
+        
+        function showNotification(message, type = 'success') {
+            // Remove existing notification if any
+            const existingNotification = document.getElementById('cart-notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.id = 'cart-notification';
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full opacity-0 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white`;
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="${type === 'success' ? 'mdi:check-circle' : 'mdi:alert-circle'}" width="24" height="24"></iconify-icon>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full', 'opacity-0');
+                notification.classList.add('translate-x-0', 'opacity-100');
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('translate-x-0', 'opacity-100');
+                notification.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Load cart count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartCount();
+        });
+    </script>
 </body>
 </html>

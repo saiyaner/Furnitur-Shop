@@ -11,6 +11,7 @@
   <header class="header relative">
     <img src="{{ asset('img/bg-hero-home.png') }}" class="w-full object-cover object-center h-screen absolute inset-0 -z-10">
 
+
       <nav class="flex justify-between items-center bg-white md:bg-transparent md:text-white md:mx-20 py-5 px-5 relative">
         <div class="font-bold text-2xl flex items-center md:mx-0">
           <h1 class="hidden md:flex">LOGO</h1>
@@ -33,8 +34,14 @@
           </a>
           @endguest
           @auth
-          <a href="{{ url('dashboard') }}" class="w-8 h-8 rounded-full overflow-hidden border border-white/50">
-            <img src="{{ asset(Auth::user()->image) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 object-cover">
+          <a href="{{ Auth::user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}" class="w-8 h-8 rounded-full overflow-hidden border border-white/50">
+            @if(Auth::user()->image)
+              <img src="{{ asset(Auth::user()->image) }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 object-cover">
+            @else
+              <div class="w-8 h-8 bg-gray-400 flex items-center justify-center text-white text-xs font-bold">
+                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+              </div>
+            @endif
           </a>
           @endauth
         </div>
@@ -135,240 +142,45 @@
 
       <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           @foreach ($products as $product)
-          <div class="bg-white rounded-lg shadow-lg p-4 relative">
-              <!-- Popular Badge -->
-              @if($product->rate >= 4.5)
+          @if($product->rate >= 4.5)
               <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
                   POPULAR
               </div>
               @endif
-              
-              <div class="relative">
-                  <iconify-icon icon="mdi:cart-outline" class="absolute top-2 left-2 text-[#BDBDBD] cursor-pointer hover:text-[#FFAE00]" width="24"></iconify-icon>
-                  <div class="bg-gray-100 rounded-lg h-40 flex items-center justify-center mb-3">
-                      <iconify-icon icon="{{ $product->image }}" width="80" class="text-[#BDBDBD]"></iconify-icon>
+            
+              <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
+                <div class="relative p-4">
+                  <button class="absolute top-1 left-0 p-2 text-gray-600">
+                      <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
+                  </button>
+                  <div class="flex justify-center items-center h-40">
+                    @if($product->image_url)
+                      <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-w-full max-h-full object-contain">
+                    @else
+                      <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <span class="text-gray-400 text-sm">No Image</span>
+                      </div>
+                    @endif
                   </div>
+                </div>
+                <div class="p-4">
+                  <div class="flex justify-between items-center">
+                      <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
+                      <div class="flex items-center mt-1">
+                          <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
+                          <span class="font-semibold ml-1 text-gray-600">{{ $product->rate }}</span>
+                      </div>
+                  </div>
+                  <span class="text-sm text-gray-500 font-medium">{{$product->category}}</span>
+                  <div class="flex items-center justify-between mt-4">
+                    <span class="text-lg font-bold">${{ number_format($product->price, 2) }}</span>
+                    <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1  rounded-full text-xs">
+                    BUY NOW
+                    </button>
+                  </div>
+                </div>
               </div>
-              <h3 class="bold medium text-[#2D2D2D] mb-1">{{ $product->name }}</h3>
-              <div class="flex items-center gap-1 mb-2">
-                  <iconify-icon icon="mdi:star" class="text-[#FFAE00]" width="16"></iconify-icon>
-                  <span class="text-xs text-[#2D2D2D]">{{ $product->formatted_rate }}</span>
-                  <span class="text-xs text-gray-500">({{ $product->rate }})</span>
-              </div>
-              <div class="flex justify-between items-center">
-                  <span class="text-lg font-bold text-[#2D2D2D]">${{ number_format($product->price, 2) }}</span>
-                  <button class="bg-[#FFAE00] text-white px-4 py-1 rounded text-xs font-medium hover:bg-[#C47F00] transition">Add to cart</button>
-              </div>
-          </div>
           @endforeach
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-4">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1  rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-4">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1  rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-4">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1  rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-6">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-6">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-6">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-6">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-            <div class="relative p-4">
-              <button class="absolute top-1 left-0 p-2 text-gray-600">
-                  <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-              </button>
-              <div class="flex justify-center items-center h-40">
-                <img src="{{ asset('img/image 5.png') }}" alt="">
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium text-gray-800">Shop Lamp</h3>
-                  <div class="flex items-center mt-1">
-                      <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                      <span class="font-semibold ml-1 text-gray-600">4.3</span>
-                  </div>
-              </div>
-              <span class="text-sm text-gray-500 font-medium">Woord</span>
-              <div class="flex items-center justify-between mt-6">
-                <span class="text-lg font-bold">35$</span>
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                BUY NOW
-                </button>
-              </div>
-            </div>
-          </div>
        </div>
     </section>
 

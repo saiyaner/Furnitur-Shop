@@ -10,7 +10,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('productlist', compact('products'));
+        $chairProducts = Product::where('category', 'Chair')->get();
+        $tableProducts = Product::where('category', 'Table')->get();
+        $sofaProducts = Product::where('category', 'Sofa')->get();
+        $lampProducts = Product::where('category', 'Lamp')->get();
+        $bedProducts = Product::where('category', 'Bed')->get();
+        return view('productlist', compact('products', 'chairProducts', 'tableProducts', 'sofaProducts', 'lampProducts', 'bedProducts'));
     }
 
     //menunjukkan data produk yang populer (banyak dilihat)
