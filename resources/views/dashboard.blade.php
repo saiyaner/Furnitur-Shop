@@ -118,7 +118,17 @@
 
         <!-- Main Content - Offset by sidebar width -->
         <main class="ml-64 flex-1 flex justify-center">
-            <div class="w-full max-w-4xl p-10">
+            <div class="w-full max-w-4xl m-5">
+
+                <div class="bg-[#7EC26D] rounded-3xl shadow-lg p-5 flex justify-start items-center gap-5 mb-5">
+                    <iconify-icon icon="mdi:user" width="45" height="45" class="bg-white rounded-full p-3"></iconify-icon>
+                    <div class="text-white">
+                        <h1>Ida Bagus Putu Angga Lesmana</h1>
+                        <h1>Admin</h1>
+                        <a href="#">Indonesia, Bali</a>
+                    </div>
+                </div>
+
                 <!-- Profile Info Card -->
                 <div class="bg-white rounded-3xl shadow-lg p-10">
                     <div class="space-y-6">
@@ -183,6 +193,7 @@
         </main>
     </div>
 
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const notification = document.getElementById('loginNotification');
