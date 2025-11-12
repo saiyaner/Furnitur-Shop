@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Create Product - Admin</title>
     @vite('resources/css/app.css')
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
 <body class="bg-gray-100">
     <!-- Header -->
@@ -37,57 +38,113 @@
                     @enderror
                 </div>
 
-                <!-- Price and Stock -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price *</label>
-                        <input type="number" name="price" id="price" step="0.01" min="0" value="{{ old('price') }}" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        @error('price')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="stock" class="block text-sm font-medium text-gray-700 mb-2">Stock *</label>
-                        <input type="number" name="stock" id="stock" min="0" value="{{ old('stock') }}" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        @error('stock')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Category and Color -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-                        <select name="category" id="category" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">Select Category</option>
-                            @foreach($categories as $key => $label)
-                                <option value="{{ $key }}" {{ old('category') == $key ? 'selected' : '' }}>{{ $label }}</option>
-                            @endforeach
-                        </select>
-                        @error('category')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="color" class="block text-sm font-medium text-gray-700 mb-2">Color *</label>
-                        <input type="text" name="color" id="color" value="{{ old('color') }}" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        @error('color')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Rate -->
+                <!-- Price -->
                 <div class="mb-6">
-                    <label for="rate" class="block text-sm font-medium text-gray-700 mb-2">Rating (0-5)</label>
-                    <input type="number" name="rate" id="rate" step="0.1" min="0" max="5" value="{{ old('rate', 0) }}"
+                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price *</label>
+                    <input type="number" name="price" id="price" step="0.01" min="0" value="{{ old('price') }}" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    @error('rate')
+                    @error('price')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Category Select -->
+                <div class="mb-6">
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+                    <select name="category" id="category" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select Category</option>
+                        <option value="chair" {{ old('category') == 'chair' ? 'selected' : '' }}>Chair</option>
+                        <option value="table" {{ old('category') == 'table' ? 'selected' : '' }}>Table</option>
+                        <option value="sofa" {{ old('category') == 'sofa' ? 'selected' : '' }}>Sofa</option>
+                        <option value="lamp" {{ old('category') == 'lamp' ? 'selected' : '' }}>Lamp</option>
+                        <option value="bed" {{ old('category') == 'bed' ? 'selected' : '' }}>Bed</option>
+                        <option value="other" {{ old('category') == 'other' ? 'selected' : '' }}>Other</option>
+                    </select>
+                    @error('category')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Color Variations -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Color Variations *</label>
+                    <div id="color-variations-container" class="space-y-4">
+                        @php
+                            $oldColors = old('color', [['name' => '', 'stock' => '', 'hex_code' => '#000000']]);
+                        @endphp
+                        
+                        @foreach($oldColors as $index => $color)
+                        <div class="color-variation-item p-4 border border-gray-300 rounded-lg bg-gray-50">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Color Name *</label>
+                                    <input type="text" name="color[{{ $index }}][name]" 
+                                        value="{{ $color['name'] }}" 
+                                        placeholder="e.g., Red, Blue, Black"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Color Code</label>
+                                    <div class="flex gap-2">
+                                        <input type="color" name="color[{{ $index }}][hex_code]" 
+                                            value="{{ $color['hex_code'] ?? '#000000' }}"
+                                            class="w-12 h-10 border border-gray-300 rounded cursor-pointer">
+                                        <input type="text" name="color[{{ $index }}][hex_code]" 
+                                            value="{{ $color['hex_code'] ?? '#000000' }}"
+                                            placeholder="#000000"
+                                            class="flex-1 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Stock *</label>
+                                    <div class="flex gap-2">
+                                        <input type="number" name="color[{{ $index }}][stock]" 
+                                            value="{{ $color['stock'] }}" 
+                                            placeholder="0"
+                                            min="0"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                        <button type="button" onclick="removeColorVariation(this)" 
+                                                class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors {{ $loop->first && $loop->count == 1 ? 'hidden' : '' }}">
+                                            <iconify-icon icon="mdi:delete"></iconify-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    
+                    <button type="button" onclick="addColorVariation()" 
+                            class="mt-3 flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                        <iconify-icon icon="mdi:plus"></iconify-icon>
+                        Add Another Color
+                    </button>
+                    
+                    @error('color')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                    @error('color.*.name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                    @error('color.*.stock')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                    
+                    <button type="button" onclick="addColorVariation()" 
+                            class="mt-3 flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                        <iconify-icon icon="mdi:plus"></iconify-icon>
+                        Add Another Color
+                    </button>
+                    
+                    @error('color')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                    @error('color.*.name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                    @error('color.*.stock')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
@@ -124,6 +181,93 @@
             </form>
         </div>
     </main>
+
+    <script>
+        let colorIndex = {{ count($oldColors) }};
+    
+    function addColorVariation() {
+        const container = document.getElementById('color-variations-container');
+        
+        const newItem = document.createElement('div');
+        newItem.className = 'color-variation-item p-4 border border-gray-300 rounded-lg bg-gray-50';
+        newItem.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Color Name *</label>
+                    <input type="text" name="color[${colorIndex}][name]" 
+                           placeholder="e.g., Red, Blue, Black"
+                           class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Color Code</label>
+                    <div class="flex gap-2">
+                        <input type="color" name="color[${colorIndex}][hex_code]" 
+                               value="#000000"
+                               class="w-12 h-10 border border-gray-300 rounded cursor-pointer">
+                        <input type="text" name="color[${colorIndex}][hex_code]" 
+                               value="#000000"
+                               placeholder="#000000"
+                               class="flex-1 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Stock *</label>
+                    <div class="flex gap-2">
+                        <input type="number" name="color[${colorIndex}][stock]" 
+                               placeholder="0"
+                               min="0"
+                               class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <button type="button" onclick="removeColorVariation(this)" 
+                                class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
+                            <iconify-icon icon="mdi:delete"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(newItem);
+        colorIndex++;
+        updateDeleteButtonsVisibility();
+    }
+    
+    function removeColorVariation(button) {
+        const item = button.closest('.color-variation-item');
+        item.remove();
+        updateDeleteButtonsVisibility();
+    }
+    
+    function updateDeleteButtonsVisibility() {
+        const items = document.querySelectorAll('.color-variation-item');
+        const deleteButtons = document.querySelectorAll('.color-variation-item button[onclick="removeColorVariation(this)"]');
+        
+        if (items.length === 1) {
+            deleteButtons[0].classList.add('hidden');
+        } else {
+            deleteButtons.forEach(button => button.classList.remove('hidden'));
+        }
+    }
+    
+    // Sync color inputs
+    document.addEventListener('input', function(e) {
+        if (e.target.type === 'color' && e.target.name.includes('hex_code')) {
+            const textInput = e.target.parentElement.querySelector('input[type="text"]');
+            if (textInput) {
+                textInput.value = e.target.value;
+            }
+        }
+        
+        if (e.target.type === 'text' && e.target.name.includes('hex_code') && e.target.value.match(/^#[0-9A-F]{6}$/i)) {
+            const colorInput = e.target.parentElement.querySelector('input[type="color"]');
+            if (colorInput) {
+                colorInput.value = e.target.value;
+            }
+        }
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        updateDeleteButtonsVisibility();
+    });
+    </script>
 </body>
 </html>
-

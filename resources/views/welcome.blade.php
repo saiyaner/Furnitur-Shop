@@ -148,6 +148,7 @@
               </div>
               @endif
             
+              <a href="{{route('detailproduct', ['id' => $product->id]) }}">
               <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
                 <div class="relative p-4">
                   <button class="absolute top-1 left-0 p-2 text-gray-600">
@@ -180,6 +181,7 @@
                   </div>
                 </div>
               </div>
+            </a>
           @endforeach
        </div>
     </section>

@@ -72,20 +72,33 @@
                     
                     <div class="mb-4">
                         <label class="block text-sm font-semibold mb-2">Color:</label>
-                        <div class="flex gap-3">
+                        <div class="flex flex-wrap gap-3">
                             @php
-                                $colors = ['Red', 'Black', 'Orange'];
-                                $productColors = explode(',', $product->color);
+                                // Get available colors from the product
+                                $availableColors = $product->availableColors;
+                                $firstColor = $availableColors->first();
                             @endphp
-                            @foreach($colors as $color)
-                                <button 
-                                    onclick="selectColor('{{ $color }}')" 
-                                    class="color-btn px-4 py-2 border rounded {{ in_array($color, $productColors) && $color === $productColors[0] ? 'bg-yellow-100 border-yellow-400' : 'bg-gray-100 border-gray-300' }} {{ !in_array($color, $productColors) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-yellow-50' }}"
-                                    data-color="{{ $color }}"
-                                    {{ !in_array($color, $productColors) ? 'disabled' : '' }}>
-                                    {{ $color }}
-                                </button>
-                            @endforeach
+                            
+                            @if($availableColors->count() > 0)
+                                @foreach($availableColors as $index => $color)
+                                    <button 
+                                        onclick="selectColor({{ $index }}, '{{ $color['name'] }}', {{ $color['stock'] }})" 
+                                        class="color-btn px-4 py-2 border rounded {{ $loop->first ? 'bg-yellow-100 border-yellow-400' : 'bg-gray-100 border-gray-300' }} hover:bg-yellow-50 transition-colors"
+                                        data-color-index="{{ $index }}"
+                                        data-color-name="{{ $color['name'] }}"
+                                        data-stock="{{ $color['stock'] }}"
+                                        title="{{ $color['name'] }} (Stock: {{ $color['stock'] }})">
+                                        <div class="flex items-center gap-2">
+                                            @if(isset($color['hex_code']))
+                                                <div class="w-4 h-4 rounded-full border border-gray-300" style="background-color: {{ $color['hex_code'] }}"></div>
+                                            @endif
+                                            <span>{{ $color['name'] }}</span>
+                                        </div>
+                                    </button>
+                                @endforeach
+                            @else
+                                <p class="text-gray-500">No colors available</p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -97,7 +110,18 @@
                     <h2 class="text-xl font-bold mb-4">Amount</h2>
                     <div class="mb-4">
                         <span class="text-sm text-gray-600">Selected Color: </span>
-                        <span id="selected-color" class="font-semibold">{{ $product->color }}</span>
+                        <span id="selected-color" class="font-semibold">
+                            @if($product->availableColors->count() > 0)
+                                {{ $product->availableColors->first()['name'] }}
+                            @else
+                                No color available
+                            @endif
+                        </span>
+                        <span id="selected-stock" class="text-sm text-gray-600 ml-2">
+                            @if($product->availableColors->count() > 0)
+                                (Stock: {{ $product->availableColors->first()['stock'] }})
+                            @endif
+                        </span>
                     </div>
                     
                     <div class="flex items-center gap-4 mb-4">
@@ -109,21 +133,19 @@
                         </div>
                     </div>
                     
-                    <div class="mb-4">
-                        <span class="text-sm text-gray-600">Stock = </span>
-                        <span class="font-semibold">{{ $product->stock }}</span>
-                    </div>
-                    
                     <div class="mb-6">
                         <span class="text-sm text-gray-600">Total Price </span>
                         <span id="total-price" class="text-2xl font-bold">${{ number_format($product->price, 2) }}</span>
                     </div>
                     
                     <div class="space-y-3">
-                        <button id="add-to-cart-btn" onclick="addToCart()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                            Add to Cart
+                        <button id="add-to-cart-btn" onclick="addToCart()" 
+                            class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            {{ $product->availableColors->count() == 0 ? 'disabled' : '' }}>
+                            {{ $product->availableColors->count() == 0 ? 'Out of Stock' : 'Add to Cart' }}
                         </button>
-                        <button class="w-full bg-white border-2 border-yellow-400 text-yellow-600 hover:bg-yellow-50 font-semibold py-3 rounded-lg transition-colors">
+                        <button class="w-full bg-white border-2 border-yellow-400 text-yellow-600 hover:bg-yellow-50 font-semibold py-3 rounded-lg transition-colors"
+                            {{ $product->availableColors->count() == 0 ? 'disabled' : '' }}>
                             Buy Now
                         </button>
                     </div>
@@ -255,26 +277,33 @@
     </footer>
 
     <script>
-         // Simple JavaScript for quantity selector and color selection
+        // Simple JavaScript for quantity selector and color selection
         let quantity = 1;
-        let selectedColor = '{{ $product->color }}';
+        let selectedColorIndex = 0;
+        let selectedColorName = '{{ $product->availableColors->count() > 0 ? $product->availableColors->first()["name"] : "" }}';
+        let selectedColorStock = {{ $product->availableColors->count() > 0 ? $product->availableColors->first()["stock"] : 0 }};
         const price = {{ $product->price }};
         const productId = {{ $product->id }};
         
-        const maxStock = {{ $product->stock }};
+        // Get all available colors as array
+        const availableColors = @json($product->availableColors);
         
         function updateQuantity(change) {
             const newQuantity = quantity + change;
+            const maxStock = selectedColorStock;
             quantity = Math.max(1, Math.min(maxStock, newQuantity));
             document.getElementById('quantity').textContent = quantity;
             updateTotalPrice();
         }
         
-        function selectColor(color) {
-            selectedColor = color;
+        function selectColor(index, colorName, stock) {
+            selectedColorIndex = index;
+            selectedColorName = colorName;
+            selectedColorStock = stock;
+            
             // Update UI
             document.querySelectorAll('.color-btn').forEach(btn => {
-                if (btn.dataset.color === color) {
+                if (parseInt(btn.dataset.colorIndex) === index) {
                     btn.classList.add('bg-yellow-100', 'border-yellow-400');
                     btn.classList.remove('bg-gray-100', 'border-gray-300');
                 } else {
@@ -282,7 +311,19 @@
                     btn.classList.add('bg-gray-100', 'border-gray-300');
                 }
             });
-            document.getElementById('selected-color').textContent = color;
+            
+            document.getElementById('selected-color').textContent = colorName;
+            document.getElementById('selected-stock').textContent = `(Stock: ${stock})`;
+            
+            // Reset quantity if exceeds new stock
+            if (quantity > stock) {
+                quantity = Math.max(1, Math.min(stock, 1));
+                document.getElementById('quantity').textContent = quantity;
+                updateTotalPrice();
+            }
+            
+            // Update max quantity
+            updateTotalPrice();
         }
         
         function updateTotalPrice() {
@@ -293,7 +334,12 @@
         // Cart functionality
         function loadCartCount() {
             fetch('{{ route("cart.count") }}')
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     updateCartBadge(data.cart_count);
                 })
@@ -320,29 +366,54 @@
             button.disabled = true;
             button.textContent = 'Adding...';
             
+            // Get the selected color data
+            const selectedColorData = availableColors[selectedColorIndex];
+            
+            // Validate data before sending
+            if (!selectedColorData || !productId || !quantity) {
+                showNotification('Data produk tidak valid', 'error');
+                button.disabled = false;
+                button.textContent = originalText;
+                return;
+            }
+            
+            // Prepare form data (not JSON) for better Laravel compatibility
+            const formData = new FormData();
+            formData.append('product_id', productId);
+            formData.append('color_name', selectedColorData.name);
+            formData.append('color_stock', selectedColorData.stock);
+            formData.append('quantity', quantity);
+            
+            // Add hex_code if available
+            if (selectedColorData.hex_code) {
+                formData.append('color_hex', selectedColorData.hex_code);
+            }
+            
             fetch('{{ route("cart.add") }}', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
                 },
-                body: JSON.stringify({
-                    product_id: productId,
-                    color: selectedColor
-                })
+                body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     updateCartBadge(data.cart_count);
-                    showNotification(data.message, 'success');
+                    showNotification(data.message || 'Produk berhasil ditambahkan ke keranjang', 'success');
                 } else {
                     showNotification(data.message || 'Gagal menambahkan produk ke keranjang', 'error');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                showNotification('Terjadi kesalahan saat menambahkan ke keranjang', 'error');
+                showNotification('Terjadi kesalahan saat menambahkan ke keranjang. Silakan coba lagi.', 'error');
             })
             .finally(() => {
                 button.disabled = false;
@@ -391,6 +462,11 @@
         // Load cart count on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadCartCount();
+            
+            // Debug info
+            console.log('Available colors:', availableColors);
+            console.log('Product ID:', productId);
+            console.log('Price:', price);
         });
     </script>
 </body>

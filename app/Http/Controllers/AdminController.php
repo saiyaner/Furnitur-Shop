@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -13,11 +14,23 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        // Statistik produk
+        // Statistik produk - update untuk multiple colors
         $totalProducts = Product::count();
-        $totalStock = Product::sum('stock');
-        $lowStockProducts = Product::where('stock', '<', 10)->count();
-        $outOfStockProducts = Product::where('stock', 0)->count();
+        
+        // Total stock dari semua warna semua produk
+        $totalStock = Product::all()->sum(function($product) {
+            return $product->total_stock;
+        });
+        
+        // Produk dengan stok rendah (total stock < 10)
+        $lowStockProducts = Product::all()->filter(function($product) {
+            return $product->total_stock < 10 && $product->total_stock > 0;
+        })->count();
+        
+        // Produk habis (total stock = 0)
+        $outOfStockProducts = Product::all()->filter(function($product) {
+            return $product->total_stock == 0;
+        })->count();
         
         // Statistik rating
         $goodRatings = Product::where('rate', '>=', 4.0)->count();
@@ -29,10 +42,10 @@ class AdminController extends Controller
         $lowRatedProducts = Product::where('rate', '>', 0)->orderBy('rate', 'asc')->take(5)->get();
         
         // Produk dengan stok terendah
-        $lowStockList = Product::where('stock', '<', 10)->orderBy('stock', 'asc')->take(10)->get();
+        $lowStockList = Product::all()->sortBy('total_stock')->take(10);
         
         // Statistik per kategori
-        $categoryStats = Product::selectRaw('category, COUNT(*) as total, SUM(stock) as total_stock, AVG(rate) as avg_rate')
+        $categoryStats = Product::selectRaw('category, COUNT(*) as total, AVG(rate) as avg_rate')
             ->groupBy('category')
             ->get();
 
@@ -65,7 +78,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        $categories = Product::getCategories();
+        $categories = ['chair', 'table', 'sofa', 'lamp', 'bed', 'other'];
         return view('Admin.products.create', compact('categories'));
     }
 
@@ -74,30 +87,41 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'category' => 'required|in:chair,table,sofa,lamp,bed,other',
-            'rate' => 'nullable|numeric|between:0,5',
-            'color' => 'required|string|max:50',
-            'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $validated = $request->validate(Product::rules());
 
+        $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'required|numeric|min:0',
+        'category' => 'required|in:chair,table,sofa,lamp,bed,other',
+        'rate' => 'nullable|numeric|between:0,5',
+        'description' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'color' => 'required|array|min:1',
+        'color.*.name' => 'required|string|max:50',
+        'color.*.stock' => 'required|integer|min:0',
+        'color.*.hex_code' => 'nullable|string|max:7',
+    ]);
+
+        DB::transaction(function () use ($validated, $request) {
         // Handle image upload
+        $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
-            $validated['image'] = $imagePath;
-        } else {
-            $validated['image'] = null;
         }
 
-        $validated['rate'] = $validated['rate'] ?? 0.0;
+        $product = Product::create([
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'category' => $validated['category'],
+            'rate' => $validated['rate'] ?? 0.0,
+            'description' => $validated['description'],
+            'image' => $imagePath,
+            'color' => $validated['color'],
+            'stock' => 0
+        ]);
+    });
 
-        Product::create($validated);
-
-        return redirect()->route('admin.products')->with('success', 'Product created successfully!');
+    return redirect()->route('admin.products')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -106,7 +130,7 @@ class AdminController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        $categories = Product::getCategories();
+        $categories = ['chair', 'table', 'sofa', 'lamp', 'bed', 'other'];
         return view('Admin.products.edit', compact('product', 'categories'));
     }
 
@@ -116,33 +140,33 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-
+        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
             'category' => 'required|in:chair,table,sofa,lamp,bed,other',
             'rate' => 'nullable|numeric|between:0,5',
-            'color' => 'required|string|max:50',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'color' => 'required|array|min:1', // Ubah ini juga
+            'color.*.name' => 'required|string|max:50',
+            'color.*.stock' => 'required|integer|min:0',
+            'color.*.hex_code' => 'nullable|string|max:7',
         ]);
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
+        DB::transaction(function () use ($product, $validated, $request) {
+            // Handle image upload
+            $imagePath = $product->image;
+            if ($request->hasFile('image')) {
+                // Hapus gambar lama jika ada
+                if ($product->image) {
+                    Storage::disk('public')->delete($product->image);
+                }
+                $imagePath = $request->file('image')->store('products', 'public');
             }
-            $imagePath = $request->file('image')->store('products', 'public');
-            $validated['image'] = $imagePath;
-        }
 
-        $validated['rate'] = $validated['rate'] ?? $product->rate;
-
-        $product->update($validated);
-
-        return redirect()->route('admin.products')->with('success', 'Product updated successfully!');
+            return redirect()->route('admin.products')->with('success', 'Product updated successfully!');
+        });
     }
 
     /**
@@ -162,4 +186,3 @@ class AdminController extends Controller
         return redirect()->route('admin.products')->with('success', 'Product deleted successfully!');
     }
 }
-

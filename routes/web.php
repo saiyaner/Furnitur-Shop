@@ -14,14 +14,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Admin Routes
+// routes/web.php
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/products', [\App\Http\Controllers\AdminController::class, 'products'])->name('products');
-    Route::get('/products/create', [\App\Http\Controllers\AdminController::class, 'create'])->name('products.create');
-    Route::post('/products', [\App\Http\Controllers\AdminController::class, 'store'])->name('products.store');
-    Route::get('/products/{id}/edit', [\App\Http\Controllers\AdminController::class, 'edit'])->name('products.edit');
-    Route::put('/products/{id}', [\App\Http\Controllers\AdminController::class, 'update'])->name('products.update');
-    Route::delete('/products/{id}', [\App\Http\Controllers\AdminController::class, 'destroy'])->name('products.destroy');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/products', [AdminController::class, 'products'])->name('products');
+    Route::get('/products/create', [AdminController::class, 'create'])->name('products.create');
+    Route::post('/products', [AdminController::class, 'store'])->name('products.store');
+    Route::get('/products/{id}/edit', [AdminController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{id}', [AdminController::class, 'update'])->name('products.update');
+    Route::delete('/products/{id}', [AdminController::class, 'destroy'])->name('products.destroy');
 });
 
 Route::middleware('auth')->group(function () {

@@ -15,7 +15,9 @@ class ProductController extends Controller
         $sofaProducts = Product::where('category', 'Sofa')->get();
         $lampProducts = Product::where('category', 'Lamp')->get();
         $bedProducts = Product::where('category', 'Bed')->get();
-        return view('productlist', compact('products', 'chairProducts', 'tableProducts', 'sofaProducts', 'lampProducts', 'bedProducts'));
+        return view('productlist', compact(
+            'products', 'chairProducts', 'tableProducts', 'sofaProducts', 'lampProducts', 'bedProducts')
+        );
     }
 
     //menunjukkan data produk yang populer (banyak dilihat)
@@ -34,4 +36,5 @@ class ProductController extends Controller
         }
         return view('detailproduct', compact('product'));
     }
+
 }
