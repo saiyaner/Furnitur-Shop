@@ -136,7 +136,7 @@
                     </svg>
                 </button>
                 
-                <div id="chair-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide"
+                <div id="chair-carousel" class="flex overflow-x-scroll gap-6 px-12 pb-4 scrollbar-hide"
                     style="scroll-snap-type: x mandatory;">
                     <!-- Product Cards -->
                     @foreach ($chairProducts as $product)
