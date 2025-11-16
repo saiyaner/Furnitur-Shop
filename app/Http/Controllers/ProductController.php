@@ -10,13 +10,14 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+        $recommendforyou = Product::inRandomOrder()->take(4)->get();
         $chairProducts = Product::where('category', 'Chair')->get();
         $tableProducts = Product::where('category', 'Table')->get();
         $sofaProducts = Product::where('category', 'Sofa')->get();
         $lampProducts = Product::where('category', 'Lamp')->get();
         $bedProducts = Product::where('category', 'Bed')->get();
         return view('productlist', compact(
-            'products', 'chairProducts', 'tableProducts', 'sofaProducts', 'lampProducts', 'bedProducts')
+            'products', 'chairProducts', 'tableProducts', 'sofaProducts', 'lampProducts', 'bedProducts', 'recommendforyou')
         );
     }
 

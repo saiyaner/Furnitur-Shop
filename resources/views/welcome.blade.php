@@ -142,46 +142,42 @@
 
       <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           @foreach ($products as $product)
-          @if($product->rate >= 4.5)
-              <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-                  POPULAR
-              </div>
-              @endif
-            
-              <a href="{{route('detailproduct', ['id' => $product->id]) }}">
-              <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-                <div class="relative p-4">
-                  <button class="absolute top-1 left-0 p-2 text-gray-600">
+          @if ($product->rate >= 4.5)
+          <a href="{{route('detailproduct', ['id' => $product->id]) }}">
+            <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
+              <div class="relative p-4">
+                <button class="absolute top-1 left-0 p-2 text-gray-600">
                       <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-                  </button>
-                  <div class="flex justify-center items-center h-40">
-                    @if($product->image_url)
+                    </button>
+                    <div class="flex justify-center items-center h-40">
+                      @if($product->image_url)
                       <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-w-full max-h-full object-contain">
-                    @else
+                      @else
                       <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                         <span class="text-gray-400 text-sm">No Image</span>
                       </div>
-                    @endif
+                      @endif
+                    </div>
                   </div>
-                </div>
-                <div class="p-4">
-                  <div class="flex justify-between items-center">
+                  <div class="p-4">
+                    <div class="flex justify-between items-center">
                       <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
                       <div class="flex items-center mt-1">
-                          <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
-                          <span class="font-semibold ml-1 text-gray-600">{{ $product->rate }}</span>
+                        <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24" height="24"></iconify-icon>
+                        <span class="font-semibold ml-1 text-gray-600">{{ $product->rate }}</span>
                       </div>
-                  </div>
-                  <span class="text-sm text-gray-500 font-medium">{{$product->category}}</span>
-                  <div class="flex items-center justify-between mt-4">
-                    <span class="text-lg font-bold">${{ number_format($product->price, 2) }}</span>
-                    <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1  rounded-full text-xs">
-                    BUY NOW
-                    </button>
+                    </div>
+                    <span class="text-sm text-gray-500 font-medium">{{$product->category}}</span>
+                    <div class="flex items-center justify-between mt-4">
+                      <span class="text-lg font-bold">${{ number_format($product->price, 2) }}</span>
+                      <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1  rounded-full text-xs">
+                        BUY NOW
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+              @endif
           @endforeach
        </div>
     </section>

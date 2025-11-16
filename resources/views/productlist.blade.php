@@ -10,6 +10,17 @@
         .carousel-container {
             scroll-behavior: smooth;
         }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .carousel-item {
+            flex: 0 0 auto;
+            width: 280px;
+        }
     </style>
 </head>
 
@@ -76,7 +87,7 @@
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-6">Recommend For You</h2>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">   
-                @foreach ($products as $product)
+                @foreach ($recommendforyou as $product)
                 <a href="{{route('detailproduct', ['id' => $product->id]) }}">
                 <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
                     <div class="relative p-4">
@@ -85,7 +96,7 @@
                         </button>
                         <div class="flex justify-center items-center h-40">
                             @if($product->image_url)
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-h-full max-w-full object-contain">
                             @else
                                 <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                                     <span class="text-gray-400 text-xs">No Image</span>
@@ -95,7 +106,7 @@
                     </div>
                     <div class="p-4">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
+                            <h3 class="text-sm font-medium text-gray-800 truncate">{{ $product->name }}</h3>
                             <div class="flex items-center mt-1">
                                 <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
                                     height="24"></iconify-icon>
@@ -117,39 +128,37 @@
             </div>
         </section>
 
-        <!-- Chair Section with Carousel -->
+        <!-- Chair Section -->
         <section class="mb-12" id="chair">
             <h2 class="text-2xl font-bold mb-6">Chair</h2>
             <div class="relative">
                 <button onclick="scrollCarousel('chair', -1)"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                         </path>
                     </svg>
                 </button>
                 <button onclick="scrollCarousel('chair', 1)"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
                         </path>
                     </svg>
                 </button>
-                
-                <div id="chair-carousel" class="flex overflow-x-scroll gap-6 px-12 pb-4 scrollbar-hide"
-                    style="scroll-snap-type: x mandatory;">
-                    <!-- Product Cards -->
-                    @foreach ($chairProducts as $product)
-                    <a href="{{route('detailproduct', ['id' => $product->id]) }}">
-                        <div class="flex-shrink-0 w-56 snap-center">
-                            <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
+
+                <div class="overflow-hidden px-12">
+                    <div id="chair-carousel" class="flex overflow-x-auto gap-6 pb-4 scrollbar-hide carousel-container">
+                        @foreach ($chairProducts as $product )   
+                        <a href="{{route('detailproduct', ['id' => $product->id]) }}" class="carousel-item">     
+                            <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-95 h-full">
                                 <div class="relative p-4">
                                     <button class="absolute top-1 left-0 p-2 text-gray-600">
                                         <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
                                     </button>
                                     <div class="flex justify-center items-center h-40">
                                         @if($product->image_url)
-                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-h-full max-w-full object-contain">
                                         @else
                                             <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                                                 <span class="text-gray-400 text-xs">No Image</span>
@@ -159,25 +168,26 @@
                                 </div>
                                 <div class="p-4">
                                     <div class="flex justify-between items-center">
-                                        <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
+                                        <h3 class="text-sm font-medium text-gray-800 truncate">{{ $product->name }}</h3>
                                         <div class="flex items-center mt-1">
                                             <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
-                                            height="24"></iconify-icon>
+                                                height="24"></iconify-icon>
                                             <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
                                         </div>
                                     </div>
                                     <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
                                     <div class="flex items-center justify-between mt-6">
-                                        <span class="text-lg font-bold">${{ $product->price}}</span>
+                                        <span class="text-lg font-bold">${{ $product->price }}</span>
                                         <button
-                                        class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                                        BUY NOW
-                                    </button>
+                                            class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs transition-colors">
+                                            BUY NOW
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </a>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </section>
@@ -187,61 +197,62 @@
             <h2 class="text-2xl font-bold mb-6">Table</h2>
             <div class="relative">
                 <button onclick="scrollCarousel('table', -1)"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                         </path>
                     </svg>
                 </button>
                 <button onclick="scrollCarousel('table', 1)"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
                         </path>
                     </svg>
                 </button>
-                <div id="table-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
-                    <!-- Product Cards -->
-                    @foreach ($tableProducts as $product )   
-                    <a href="{{route('detailproduct', ['id' => $product->id]) }}">     
-                    <div class="flex-shrink-0 w-56 snap-center">
-                        <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-                        <div class="relative p-4">
-                            <button class="absolute top-1 left-0 p-2 text-gray-600">
-                                <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-                            </button>
-                            <div class="flex justify-center items-center h-40">
-                                @if($product->image_url)
-                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-                                @else
-                                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                                        <span class="text-gray-400 text-xs">No Image</span>
+
+                <div class="overflow-hidden px-12">
+                    <div id="table-carousel" class="flex overflow-x-auto gap-6 pb-4 scrollbar-hide carousel-container">
+                        @foreach ($tableProducts as $product )   
+                        <a href="{{route('detailproduct', ['id' => $product->id]) }}" class="carousel-item">     
+                            <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-95 h-full">
+                                <div class="relative p-4">
+                                    <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                        <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
+                                    </button>
+                                    <div class="flex justify-center items-center h-40">
+                                        @if($product->image_url)
+                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-h-full max-w-full object-contain">
+                                        @else
+                                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-400 text-xs">No Image</span>
+                                            </div>
+                                        @endif
                                     </div>
-                                @endif
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="text-sm font-medium text-gray-800 truncate">{{ $product->name }}</h3>
+                                        <div class="flex items-center mt-1">
+                                            <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
+                                                height="24"></iconify-icon>
+                                            <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
+                                    <div class="flex items-center justify-between mt-6">
+                                        <span class="text-lg font-bold">${{ $product->price }}</span>
+                                        <button
+                                            class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs transition-colors">
+                                            BUY NOW
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
-                            <div class="flex items-center mt-1">
-                                <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
-                                    height="24"></iconify-icon>
-                                <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
-                            </div>
-                        </div>
-                        <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
-                        <div class="flex items-center justify-between mt-6">
-                            <span class="text-lg font-bold">${{ $product->price }}</span>
-                            <button
-                                class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                                BUY NOW
-                            </button>
-                        </div>
+                        </a>
+                        @endforeach
                     </div>
                 </div>
-                </a>
-                @endforeach
-            </div>
             </div>
         </section>
 
@@ -250,61 +261,62 @@
             <h2 class="text-2xl font-bold mb-6">Sofa</h2>
             <div class="relative">
                 <button onclick="scrollCarousel('sofa', -1)"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                         </path>
                     </svg>
                 </button>
                 <button onclick="scrollCarousel('sofa', 1)"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
                         </path>
                     </svg>
                 </button>
-                <div id="sofa-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
-                    @foreach ($sofaProducts as $product )
-                    <a href="{{route('detailproduct', ['id' => $product->id]) }}">             
-                    <div class="flex-shrink-0 w-56 snap-center">
-                        <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-                            <div class="relative p-4">
-                                <button class="absolute top-1 left-0 p-2 text-gray-600">
-                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-                                </button>
-                                <div class="flex justify-center items-center h-40">
-                                    @if($product->image_url)
-                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-                                    @else
-                                        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                                            <span class="text-gray-400 text-xs">No Image</span>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-center">
-                                    <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
-                                    <div class="flex items-center mt-1">
-                                        <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
-                                        height="24"></iconify-icon>
-                                        <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
+
+                <div class="overflow-hidden px-12">
+                    <div id="sofa-carousel" class="flex overflow-x-auto gap-6 pb-4 scrollbar-hide carousel-container">
+                        @foreach ($sofaProducts as $product )   
+                        <a href="{{route('detailproduct', ['id' => $product->id]) }}" class="carousel-item">     
+                            <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-95 h-full">
+                                <div class="relative p-4">
+                                    <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                        <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
+                                    </button>
+                                    <div class="flex justify-center items-center h-40">
+                                        @if($product->image_url)
+                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-h-full max-w-full object-contain">
+                                        @else
+                                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-400 text-xs">No Image</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
-                                <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
-                                <div class="flex items-center justify-between mt-6">
-                                    <span class="text-lg font-bold">${{ $product->price}}</span>
-                                    <button
-                                    class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                                    BUY NOW
-                                </button>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="text-sm font-medium text-gray-800 truncate">{{ $product->name }}</h3>
+                                        <div class="flex items-center mt-1">
+                                            <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
+                                                height="24"></iconify-icon>
+                                            <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
+                                    <div class="flex items-center justify-between mt-6">
+                                        <span class="text-lg font-bold">${{ $product->price }}</span>
+                                        <button
+                                            class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs transition-colors">
+                                            BUY NOW
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
+                        @endforeach
                     </div>
-                    </a>
-                    @endforeach
                 </div>
-            </div>
             </div>
         </section>
 
@@ -313,61 +325,62 @@
             <h2 class="text-2xl font-bold mb-6">Lamp</h2>
             <div class="relative">
                 <button onclick="scrollCarousel('lamp', -1)"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                         </path>
                     </svg>
                 </button>
                 <button onclick="scrollCarousel('lamp', 1)"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
                         </path>
                     </svg>
                 </button>
-                <div id="lamp-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
-                    @foreach ($lampProducts as $product )
-                    <a href="{{route('detailproduct', ['id' => $product->id]) }}">
-                    <div class="flex-shrink-0 w-56 snap-center">
-                        <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-                            <div class="relative p-4">
-                                <button class="absolute top-1 left-0 p-2 text-gray-600">
-                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-                                </button>
-                                <div class="flex justify-center items-center h-40">
-                                    @if($product->image_url)
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-                            @else
-                                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                                    <span class="text-gray-400 text-xs">No Image</span>
-                                </div>
-                            @endif
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-center">
-                                    <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
-                                    <div class="flex items-center mt-1">
-                                        <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
-                                            height="24"></iconify-icon>
-                                        <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
+
+                <div class="overflow-hidden px-12">
+                    <div id="lamp-carousel" class="flex overflow-x-auto gap-6 pb-4 scrollbar-hide carousel-container">
+                        @foreach ($lampProducts as $product )   
+                        <a href="{{route('detailproduct', ['id' => $product->id]) }}" class="carousel-item">     
+                            <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-95 h-full">
+                                <div class="relative p-4">
+                                    <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                        <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
+                                    </button>
+                                    <div class="flex justify-center items-center h-40">
+                                        @if($product->image_url)
+                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-h-full max-w-full object-contain">
+                                        @else
+                                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-400 text-xs">No Image</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
-                                <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
-                                <div class="flex items-center justify-between mt-6">
-                                    <span class="text-lg font-bold">${{ $product->price}}</span>
-                                    <button
-                                        class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                                        BUY NOW
-                                    </button>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="text-sm font-medium text-gray-800 truncate">{{ $product->name }}</h3>
+                                        <div class="flex items-center mt-1">
+                                            <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
+                                                height="24"></iconify-icon>
+                                            <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
+                                    <div class="flex items-center justify-between mt-6">
+                                        <span class="text-lg font-bold">${{ $product->price }}</span>
+                                        <button
+                                            class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs transition-colors">
+                                            BUY NOW
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                        @endforeach
                     </div>
                 </div>
-                </a>                    
-                @endforeach
             </div>
         </section>
 
@@ -376,64 +389,65 @@
             <h2 class="text-2xl font-bold mb-6">Bed</h2>
             <div class="relative">
                 <button onclick="scrollCarousel('bed', -1)"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                         </path>
                     </svg>
                 </button>
                 <button onclick="scrollCarousel('bed', 1)"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100">
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
                         </path>
                     </svg>
                 </button>
-                <div id="bed-carousel" class="flex overflow-x-auto gap-6 px-12 pb-4 scrollbar-hide">
-                    @foreach ($bedProducts as $product ) 
-                    <a href="{{route('detailproduct', ['id' => $product->id]) }}">
-                    <div class="flex-shrink-0 w-56 snap-center">
-                        <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-90">
-                            <div class="relative p-4">
-                                <button class="absolute top-1 left-0 p-2 text-gray-600">
-                                    <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
-                                </button>
-                                <div class="flex justify-center items-center h-40">
-                                    @if($product->image_url)
-                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-                                    @else
-                                        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                                            <span class="text-gray-400 text-xs">No Image</span>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-center">
-                                    <h3 class="text-sm font-medium text-gray-800">{{ $product->name }}</h3>
-                                    <div class="flex items-center mt-1">
-                                        <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
-                                        height="24"></iconify-icon>
-                                        <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
+                
+                <div class="overflow-hidden px-12">
+                    <div id="bed-carousel" class="flex overflow-x-auto gap-6 pb-4 scrollbar-hide carousel-container">
+                        @foreach ($bedProducts as $product )   
+                        <a href="{{route('detailproduct', ['id' => $product->id]) }}" class="carousel-item">     
+                            <div class="bg-white rounded-lg shadow-xl overflow-hidden transition-transform md:hover:scale-95 h-full">
+                                <div class="relative p-4">
+                                    <button class="absolute top-1 left-0 p-2 text-gray-600">
+                                        <iconify-icon icon="mdi:cart-outline" width="24" height="24"></iconify-icon>
+                                    </button>
+                                    <div class="flex justify-center items-center h-40">
+                                        @if($product->image_url)
+                                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="max-h-full max-w-full object-contain">
+                                        @else
+                                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                <span class="text-gray-400 text-xs">No Image</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
-                                <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
-                                <div class="flex items-center justify-between mt-6">
-                                    <span class="text-lg font-bold">${{ $product->price}}</span>
-                                    <button
-                                    class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs">
-                                    BUY NOW
-                                </button>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="text-sm font-medium text-gray-800 truncate">{{ $product->name }}</h3>
+                                        <div class="flex items-center mt-1">
+                                            <iconify-icon icon="material-symbols:star" class="text-yellow-300" width="24"
+                                                height="24"></iconify-icon>
+                                            <span class="font-semibold ml-1 text-gray-600">{{ $product->rate}}</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm text-gray-500 font-medium">{{ $product->category }}</span>
+                                    <div class="flex items-center justify-between mt-6">
+                                        <span class="text-lg font-bold">${{ $product->price }}</span>
+                                        <button
+                                            class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-1 rounded-full text-xs transition-colors">
+                                            BUY NOW
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
-            </a>
-            @endforeach
-        </div>
-    </section>
-    
+        </section>
+
         <!-- About Section -->
         <section class="mb-12 bg-gray-200 rounded-lg p-8">
             <div class="grid md:grid-cols-2 gap-8">
@@ -443,7 +457,7 @@
                         story. Established in 2010, we've been creating functional art that blends timeless design with
                         modern living. Our expert craftsmanship and carefully sourced materials ensure that every chair,
                         table and sofa is built to lasting beauty.</p>
-                    <button class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg">
+                    <button class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg transition-colors">
                         Learn More ›
                     </button>
                 </div>
@@ -556,7 +570,7 @@
         // Carousel scroll function
         function scrollCarousel(category, direction) {
             const carousel = document.getElementById(category + '-carousel');
-            const scrollAmount = 280; // width of card + gap
+            const scrollAmount = carousel.offsetWidth * 0.8; // Scroll 80% of carousel width
 
             if (direction === 1) {
                 carousel.scrollBy({
@@ -588,18 +602,28 @@
             }
         });
 
-        // Hide scrollbar
-        const style = document.createElement('style');
-        style.textContent = `
-            .scrollbar-hide::-webkit-scrollbar {
-                display: none;
-            }
-            .scrollbar-hide {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-        `;
-        document.head.appendChild(style);
+        // Update button visibility based on scroll position
+        function updateButtonVisibility() {
+            document.querySelectorAll('[id$="-carousel"]').forEach(carousel => {
+                const category = carousel.id.replace('-carousel', '');
+                const leftBtn = carousel.parentElement.parentElement.querySelector('button:first-child');
+                const rightBtn = carousel.parentElement.parentElement.querySelector('button:last-child');
+                
+                // Show/hide buttons based on scroll position
+                leftBtn.style.display = carousel.scrollLeft <= 10 ? 'none' : 'block';
+                rightBtn.style.display = carousel.scrollLeft >= (carousel.scrollWidth - carousel.offsetWidth - 10) ? 'none' : 'block';
+            });
+        }
+
+        // Initialize button visibility
+        document.addEventListener('DOMContentLoaded', function() {
+            updateButtonVisibility();
+            
+            // Update button visibility on scroll
+            document.querySelectorAll('[id$="-carousel"]').forEach(carousel => {
+                carousel.addEventListener('scroll', updateButtonVisibility);
+            });
+        });
     </script>
 </body>
 
